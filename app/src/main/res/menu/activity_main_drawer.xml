@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_mapa"
+            android:icon="@drawable/ic_place_black_24dp"
+            android:title="Mapa" />
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_error_outline_black_24dp"
+            android:title="Informações" />
+        <item
+            android:id="@+id/nav_qr_code"
+            android:icon="@drawable/ic_qr_codes"
+            android:title="Ler QR Code" />
+        <item
+            android:id="@+id/nav_favoritos"
+            android:icon="@drawable/ic_star_border_black_24dp"
+            android:title="Favoritos" />
+        <item
+            android:id="@+id/nav_notificacoes"
+            android:icon="@drawable/ic_alarm_on_black_24dp"
+            android:title="Notificações" />
+    </group>
+
+
+</menu>
