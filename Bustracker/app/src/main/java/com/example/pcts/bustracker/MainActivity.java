@@ -92,11 +92,6 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_qrcode) {
             fragment = new QRcodeFragment();
-           // mScanerView = new ZXingScannerView(this);
-           // setContentView(mScanerView);
-           // mScanerView.setResultHandler(this);
-           // mScanerView.startCamera();
-            //return true;
         } else if (id == R.id.nav_favorites) {
             fragment = new FavoritesFragment();
         } else if (id == R.id.nav_notifications) {
