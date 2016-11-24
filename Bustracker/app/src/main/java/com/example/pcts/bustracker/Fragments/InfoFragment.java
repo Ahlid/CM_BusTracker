@@ -2,6 +2,7 @@ package com.example.pcts.bustracker.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Display;
@@ -32,7 +33,7 @@ public class InfoFragment extends Fragment {
     private final String PARAGENS;
     private final String CARREIRAS;
     private final String CARREIRAS_PARAGEM;
-    private String Selected;
+    private String selected;
 
 
     String[] items;
@@ -51,7 +52,7 @@ public class InfoFragment extends Fragment {
         PARAGENS = "Paragens";
         CARREIRAS = "Carreiras";
         CARREIRAS_PARAGEM = "Carreiras & Paragem";
-        Selected =CARREIRAS;
+        selected =CARREIRAS;
     }
 
     @Override
@@ -60,6 +61,9 @@ public class InfoFragment extends Fragment {
          rootView = inflater.inflate(R.layout.fragment_information, container, false);
 
 
+        ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("Infomações");
+
+   
 
         TabHost host = (TabHost) rootView.findViewById( R.id.tabInfo);
         host.setup();
@@ -82,7 +86,7 @@ public class InfoFragment extends Fragment {
         spec.setContent(R.id.carreirasParagens);
         spec.setIndicator(CARREIRAS_PARAGEM);
         host.addTab(spec);
-        init(Selected);
+        init(selected);
 
 
         editText.addTextChangedListener(new TextWatcher() {
@@ -106,7 +110,7 @@ public class InfoFragment extends Fragment {
                     }
 
                 } else {
-                    init(Selected);
+                    init(selected);
                 }
             }
             @Override
@@ -122,14 +126,14 @@ public class InfoFragment extends Fragment {
                 ((TextView) rootView.findViewById(R.id.textView4)).setText(s);
 
                if(s.equals(PARAGENS)){
-                   Selected = PARAGENS;
+                   selected = PARAGENS;
                }else if(s.equals(CARREIRAS)){
-                   Selected = CARREIRAS;
+                   selected = CARREIRAS;
                }else {
-                   Selected=CARREIRAS_PARAGEM;
+                   selected=CARREIRAS_PARAGEM;
                }
 
-                init(Selected);
+                init(selected);
             }
         });
 

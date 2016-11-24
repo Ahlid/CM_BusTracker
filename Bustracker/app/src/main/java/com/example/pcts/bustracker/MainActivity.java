@@ -83,20 +83,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_map) {
             //Set the fragment initially
              fragment = new MainFragment();
-
             // Handle the camera action
         } else if (id == R.id.nav_info) {
             //Set the fragment initially
              fragment = new InfoFragment();
-
-
         } else if (id == R.id.nav_qrcode) {
             fragment = new QRcodeFragment();
-           // mScanerView = new ZXingScannerView(this);
-           // setContentView(mScanerView);
-           // mScanerView.setResultHandler(this);
-           // mScanerView.startCamera();
-            //return true;
         } else if (id == R.id.nav_favorites) {
             fragment = new FavoritesFragment();
         } else if (id == R.id.nav_notifications) {

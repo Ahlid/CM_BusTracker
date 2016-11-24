@@ -2,6 +2,7 @@ package com.example.pcts.bustracker.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ public class NotificationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
-
+        ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("Notificações");
 
         // Inflate the layout for this fragment
         return rootView;
