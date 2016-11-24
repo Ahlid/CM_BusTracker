@@ -8,6 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.pcts.bustracker.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by pcts on 11/23/2016.
@@ -15,16 +21,24 @@ import com.example.pcts.bustracker.R;
 
 public class MainFragment extends Fragment {
 
-    public MainFragment(){
-
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("BusTracker");
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+
+            @Override
+            public void onMapReady(GoogleMap map) {
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                        new LatLng(-18.142, 178.431), 2));
+
+                // Other supported types include: MAP_TYPE_NORMAL,
+                // MAP_TYPE_TERRAIN, MAP_TYPE_HYBRID and MAP_TYPE_NONE
+                map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            }
+        });
 
         // Inflate the layout for this fragment
         return rootView;

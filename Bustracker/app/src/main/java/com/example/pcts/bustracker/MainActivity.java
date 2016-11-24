@@ -3,6 +3,8 @@ package com.example.pcts.bustracker;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,32 +19,38 @@ import com.example.pcts.bustracker.Fragments.InfoFragment;
 import com.example.pcts.bustracker.Fragments.MainFragment;
 import com.example.pcts.bustracker.Fragments.NotificationsFragment;
 import com.example.pcts.bustracker.Fragments.QRcodeFragment;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends FragmentActivity
         implements NavigationView.OnNavigationItemSelectedListener,ZXingScannerView.ResultHandler {
 
-    NavigationView navigationView = null;
-    Toolbar toolbar = null;
+    private NavigationView navigationView = null;
+    private Toolbar toolbar = null;
     private ZXingScannerView mScanerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Set the fragment initially
         MainFragment fragment = new MainFragment();
-        android.support.v4.app.FragmentTransaction fragmentTransaction =
-                getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -122,4 +130,6 @@ public class MainActivity extends AppCompatActivity
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+
 }
