@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_menu_mapa"
+            android:title="Mapa" />
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_menu_info"
+            android:title="Informações"
+            />
+        <item
+            android:id="@+id/nav_qrcode"
+            android:icon="@drawable/ic_menu_qrcode"
+            android:title="Ler QRCODE" />
+        <item
+            android:id="@+id/nav_favorites"
+            android:icon="@drawable/ic_menu_favoritos"
+            android:title="Favoritos" />
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_menu_notifications"
+            android:title="Notificações" />
+
+    </group>
+
+
+
+</menu>
