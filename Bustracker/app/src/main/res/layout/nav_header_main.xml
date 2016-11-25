@@ -19,6 +19,7 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="BusTracker"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:textColor="@color/common_signin_btn_dark_text_default" />
 
 </LinearLayout>

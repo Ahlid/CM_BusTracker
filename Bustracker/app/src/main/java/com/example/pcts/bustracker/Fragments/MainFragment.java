@@ -26,6 +26,9 @@ public class MainFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("BusTracker");
+
+
+
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
 
@@ -33,10 +36,12 @@ public class MainFragment extends Fragment {
             public void onMapReady(GoogleMap map) {
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                         new LatLng(-18.142, 178.431), 2));
+                map.setMyLocationEnabled(true);
 
                 // Other supported types include: MAP_TYPE_NORMAL,
                 // MAP_TYPE_TERRAIN, MAP_TYPE_HYBRID and MAP_TYPE_NONE
-                map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+
             }
         });
 
