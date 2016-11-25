@@ -1,4 +1,7 @@
-package com.example.pcts.bustracker.Model;
+package com.example.pcts.bustracker.Managers;
+
+import com.example.pcts.bustracker.Model.Carreira;
+import com.example.pcts.bustracker.Model.Paragem;
 
 import java.util.ArrayList;
 import java.util.List;

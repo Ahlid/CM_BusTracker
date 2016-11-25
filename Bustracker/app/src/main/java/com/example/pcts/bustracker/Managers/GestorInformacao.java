@@ -1,7 +1,12 @@
-package com.example.pcts.bustracker.Model;
+package com.example.pcts.bustracker.Managers;
+
+import com.example.pcts.bustracker.Model.Autocarro;
+import com.example.pcts.bustracker.Model.Carreira;
+import com.example.pcts.bustracker.Model.Paragem;
+import com.example.pcts.bustracker.Model.TipoViagem;
+import com.example.pcts.bustracker.Model.Viagem;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -14,16 +19,18 @@ public class GestorInformacao  {
    private List<Autocarro> autocarros;
    private List<Carreira> carreiras;
    private List<Paragem> paragems;
+   private List<Viagem> viagens;
 
    private static GestorInformacao instance;
 
     private GestorInformacao() {
 
-        autocarros = new ArrayList<>();
-        carreiras = new ArrayList<>();
-        paragems = new ArrayList<>();
+        this.autocarros = new ArrayList<>();
+        this.carreiras = new ArrayList<>();
+        this.paragems = new ArrayList<>();
+        this.viagens = new ArrayList<>();
 
-
+/*
         //paragens
         Paragem p1 = new Paragem(1,"Pontes");
         Paragem p2 = new Paragem(2,"Loja Cidadão");
@@ -60,7 +67,7 @@ public class GestorInformacao  {
         p2.addCarreira(c);
         p3.addCarreira(c);
         p4.addCarreira(c);
-
+*/
     }
 
     public static GestorInformacao getInstance(){
@@ -83,7 +90,9 @@ public class GestorInformacao  {
         return paragems;
     }
 
-    public Carreira findCarreira(int id){
+    public List<Viagem> getViagens(){return viagens;}
+
+    public Carreira findCarreiraById(int id){
 
         for (Carreira c : this.carreiras){
             if(c.getNumero() == id){
@@ -94,7 +103,7 @@ public class GestorInformacao  {
         return null;
     }
 
-    public Paragem findParagem(int id){
+    public Paragem findParagemById(int id){
 
         for (Paragem p : this.paragems){
             if(p.getId() == id){
@@ -104,4 +113,62 @@ public class GestorInformacao  {
 
         return null;
     }
-}
+
+    public Viagem getViagemById(int id){
+
+        for (Viagem v : this.viagens){
+         if(v.getId()==id){
+             return v;
+         }
+        }
+
+        return null;
+    }
+
+    public Autocarro getAutocarroById(int id){
+
+        for (Autocarro a : this.autocarros){
+            if (a.getId() == id){
+                return  a;
+            }
+        }
+
+
+        return null;
+    }
+
+    public boolean addParagemACarreira(Paragem p,Carreira c){
+
+        if(!c.temParagem(p)){
+            return c.addParagem(p);
+        }
+        return false;
+    }
+
+    public boolean addViagem(int id, Carreira c, Autocarro a, Date inicio, TipoViagem tipoViagem){
+      return  this.viagens.add(new Viagem(id,a,c,inicio,tipoViagem));
+    }
+
+    public List<Viagem> obterProximasPassagens(Paragem p){
+
+        List<Viagem> aux = new ArrayList<>();
+
+
+        //TODO:acabar
+
+        return aux;
+    }
+
+    public Date getDataProximaCarreira(Carreira c){
+
+        //TODO:acabar
+        return null;
+    }
+
+    public List<Viagem> getProximasPartidas(Carreira c){
+        //TODO: acabar
+        return null;
+    }
+
+
+    }

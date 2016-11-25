@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.pcts.bustracker.Model.GestorInformacao;
+import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.R;
 
 /**

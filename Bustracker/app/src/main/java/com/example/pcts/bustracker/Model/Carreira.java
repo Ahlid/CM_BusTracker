@@ -11,17 +11,18 @@ import java.util.List;
  */
 
 public class Carreira {
+    private int id;
     private int numero;
-    private List<Paragem> paragens;
-    private List<Autocarro> partidas;
+    private String nome;
+    private List<Paragem> trajeto;
 
 
-    public Carreira(int numero) {
+    public int getId() {
+        return id;
+    }
 
-        this.numero = numero;
-        this.paragens = new ArrayList<Paragem>();
-        this.partidas = new ArrayList<Autocarro>();
-
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getNumero() {
@@ -32,69 +33,52 @@ public class Carreira {
         this.numero = numero;
     }
 
-    public List<Paragem> getParagens() {
-        return paragens;
+    public String getNome() {
+        return nome;
     }
 
-    public void setParagens(List<Paragem> paragens) {
-        this.paragens = paragens;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public List getPartida() {
-        return partidas;
-    }
-
-    public void addPartida(Autocarro partida) {
-        this.partidas.add(partida);
-    }
-
-    public boolean addParagem(Paragem e){
-        return this.paragens.add(e);
-    }
-    public Paragem removeParagem(int i){
-        return this.paragens.remove(i);
-    }
-    public boolean removeParagem(Paragem p){
-        return this.paragens.remove(p);
-    }
-
-    public Date getDataProximaCarreira(){
-
-        Date proxima = null;
-        Date actual = new Date();
-        for (Autocarro a : this.partidas){
-            if(a.getPartida().after(actual)){
-                proxima = a.getPartida() ;
-                break;
-            }
+    public Paragem getParagem (int i){
+       Paragem res = null;
+        if(i< this.trajeto.size()){
+            res = this.trajeto.get(i);
         }
 
-        return proxima;
+        return res;
+    }
+    public boolean temParagem(Paragem e){
+        return this.trajeto.contains(e);
     }
 
-    public List<Autocarro> getProximasPartidas(){
+    public boolean addParagem(Paragem e) {
+        return this.trajeto.add(e);
+    }
 
-        List<Autocarro> proximas = new ArrayList<>();
-        Date actual = new Date();
+    public Paragem removeParagem(int i) {
+        return this.trajeto.remove(i);
+    }
 
-        for (Autocarro a : this.partidas){
-            if(a.getPartida().after(actual)){
-                proximas.add(a);
+    public boolean removeParagem(Paragem p) {
+        return this.trajeto.remove(p);
+    }
 
-                if(proximas.size()> 4)
-                break;
-            }
-        }
+    public boolean verificarPassagem(Paragem p, TipoViagem tv){
 
-        return proximas;
+        //TODO: acabar metodo
+        return true;
     }
 
     @Override
     public String toString() {
         return "Carreira{" +
-                "numero=" + numero +
-                ", paragens=" + paragens +
-                ", partidas=" + partidas +
+                "id=" + id +
+                ", numero=" + numero +
+                ", nome='" + nome + '\'' +
+                ", trajeto=" + trajeto +
                 '}';
     }
 }
+

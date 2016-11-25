@@ -8,35 +8,24 @@ import java.util.Date;
 
 public class Autocarro {
 
-    private String detalhe;
+    private int id;
     private boolean temAcessoCadeiraDeRodas;
     private boolean temAcessoBicicleta;
-    private Date partida;
-    private Paragem actual;
 
-    public Autocarro(String detalhe, boolean temAcessoCadeiraDeRodas, boolean temAcessoBicicleta, Date partida, Paragem actual) {
-        this.detalhe = detalhe;
+
+    public Autocarro(int id, boolean temAcessoCadeiraDeRodas, boolean temAcessoBicicleta) {
+        this.id = id;
         this.temAcessoCadeiraDeRodas = temAcessoCadeiraDeRodas;
         this.temAcessoBicicleta = temAcessoBicicleta;
-        this.partida = partida;
-        this.actual = actual;
+
     }
 
-    public Paragem getActual() {
-        return actual;
+    public int getId() {
+        return id;
     }
 
-    public void setActual(Paragem actual) {
-        this.actual = actual;
-    }
-
-
-    public String getDetalhe() {
-        return detalhe;
-    }
-
-    public void setDetalhe(String detalhe) {
-        this.detalhe = detalhe;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isTemAcessoCadeiraDeRodas() {
@@ -55,22 +44,14 @@ public class Autocarro {
         this.temAcessoBicicleta = temAcessoBicicleta;
     }
 
-    public Date getPartida() {
-        return partida;
-    }
-
-    public void setPartida(Date partida) {
-        this.partida = partida;
-    }
 
     @Override
     public String toString() {
         return "Autocarro{" +
-                "detalhe='" + detalhe + '\'' +
+                "id='" + id + '\'' +
                 ", temAcessoCadeiraDeRodas=" + temAcessoCadeiraDeRodas +
                 ", temAcessoBicicleta=" + temAcessoBicicleta +
-                ", partida=" + partida +
-                ", actual=" + actual +
+
                 '}';
     }
 }
