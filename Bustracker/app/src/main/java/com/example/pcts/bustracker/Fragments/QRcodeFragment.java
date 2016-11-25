@@ -24,7 +24,7 @@ private ZXingScannerView mScanerView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_qrcode, container, false);
+
         ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("QRCODE");
         mScanerView = new ZXingScannerView(getContext());
 

@@ -1,7 +1,10 @@
 package com.example.pcts.bustracker.Fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +43,12 @@ public class MainFragment extends Fragment {
 
                 // Other supported types include: MAP_TYPE_NORMAL,
                 // MAP_TYPE_TERRAIN, MAP_TYPE_HYBRID and MAP_TYPE_NONE
-                map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    map.setMyLocationEnabled(true);
+                }
 
             }
         });
