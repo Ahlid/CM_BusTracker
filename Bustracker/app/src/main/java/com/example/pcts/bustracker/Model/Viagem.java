@@ -77,7 +77,13 @@ public class Viagem implements Comparable{
 
         Viagem v = (Viagem) o ;
 
-        return this.partida.compareTo(v.partida);
+
+
+        int timeO = v.partida.getHours()*60*60 + v.partida.getMinutes() *60 + v.partida.getSeconds();
+        int timeT = this.partida.getHours()*60*60 + this.partida.getMinutes()*60 + this.partida.getSeconds();
+
+        return timeT - timeO;
+
     }
 
     @Override

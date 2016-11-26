@@ -33,7 +33,7 @@ public class FavoritesFragment extends Fragment {
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Scan result");
-                builder.setMessage(GestorInformacao.getInstance().getParagems().toString()+"\n"+GestorInformacao.getInstance().getCarreiras().toString()+"\n"+GestorInformacao.getInstance().getAutocarros().toString());
+                builder.setMessage(GestorInformacao.getInstance().getParagems().toString()+"\n"+GestorInformacao.getInstance().getCarreiras().toString()+"\n"+GestorInformacao.getInstance().getAutocarros().toString()+"\n"+GestorInformacao.getInstance().getViagens()) ;
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }

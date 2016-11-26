@@ -16,6 +16,19 @@ public class Carreira {
     private String nome;
     private List<Paragem> trajeto;
 
+    public Carreira(int id, int numero, String nome) {
+        this.id = id;
+        this.numero = numero;
+        this.nome = nome;
+        this.trajeto = new ArrayList<>();
+    }
+
+    public Carreira(int id, int numero, String nome, List<Paragem> trajeto) {
+        this.id = id;
+        this.numero = numero;
+        this.nome = nome;
+        this.trajeto = trajeto;
+    }
 
     public int getId() {
         return id;
@@ -65,10 +78,23 @@ public class Carreira {
         return this.trajeto.remove(p);
     }
 
-    public boolean verificarPassagem(Paragem p, TipoViagem tv){
+    public boolean verificarPassagem(Paragem actual, Paragem proxima, TipoViagem tv){
 
-        //TODO: acabar metodo
-        return true;
+        if(!this.temParagem(actual) || ! this.temParagem(proxima)){
+            return false;
+        }
+
+        int indexActual = this.trajeto.indexOf(actual);
+        int indexProxima = this.trajeto.indexOf(proxima);
+
+
+        if(TipoViagem.IDA == tv){
+            return indexActual < indexProxima;
+        }else {
+            return indexActual > indexProxima;
+        }
+
+
     }
 
     @Override
