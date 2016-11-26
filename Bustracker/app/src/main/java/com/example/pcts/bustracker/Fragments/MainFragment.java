@@ -3,9 +3,11 @@ package com.example.pcts.bustracker.Fragments;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,14 +55,20 @@ public class MainFragment extends Fragment {
         mapFragment.getMapAsync(new OnMapReadyCallback() {
 
             @Override
-            public void onMapReady(GoogleMap map) {
+            public void onMapReady(final GoogleMap map) {
 
                 map.setMyLocationEnabled(true);
+                map.getUiSettings().setZoomControlsEnabled(true);
 
 
                 // Other supported types include: MAP_TYPE_NORMAL,
                 // MAP_TYPE_TERRAIN, MAP_TYPE_HYBRID and MAP_TYPE_NONE
                 map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+
+
+
+
                 setUpClusterer(map);
 
             }
@@ -73,7 +81,7 @@ public class MainFragment extends Fragment {
 
     private void setUpClusterer(GoogleMap map) {
         // Declare a variable for the cluster manager.
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.528244, -8.882786), 10));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.528244, -8.882786), 15));
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
@@ -89,7 +97,7 @@ public class MainFragment extends Fragment {
         addItems(map);
     }
 
-    private void addItems(GoogleMap map) {
+    private void addItems(final GoogleMap map) {
 
         ArrayList<LatLng> points;
         PolylineOptions lineOptions = null;
@@ -103,6 +111,19 @@ public class MainFragment extends Fragment {
 
 
             MyItem offsetItem = new MyItem(p);
+            mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
+                @Override
+                public boolean onClusterItemClick(MyItem myItem) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Scan result");
+                    builder.setMessage(myItem.getParagem().toString()+"\n"+GestorInformacao.getInstance().obterProximasPassagens(myItem.getParagem())) ;
+                    //TODO: ver detalhes, adicionar favoritos
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    return false;
+                }
+            });
             points.add(p.getPosicao());
             mClusterManager.addItem(offsetItem);
         }

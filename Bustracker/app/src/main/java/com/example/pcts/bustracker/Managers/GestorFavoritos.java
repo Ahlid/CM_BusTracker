@@ -22,6 +22,7 @@ public class GestorFavoritos {
         carreiras = new ArrayList<>();
         paragens = new ArrayList<>();
 
+
     }
 
     public static GestorFavoritos getInstance(){
@@ -35,6 +36,27 @@ public class GestorFavoritos {
     private static void getData(){
 
         //TODO: aqui ir buscar à memória interna
+    }
+
+    private void saveData(){
+
+    }
+
+
+    public List<Carreira> getCarreiras(){
+        return this.carreiras;
+
+    }
+
+    public List<Paragem> getParagens() {
+        return paragens;
+    }
+
+    public boolean addCarreira(Carreira c){
+
+        boolean res = (this.carreiras.contains(c)) ? false : this.carreiras.add(c);
+        saveData();
+        return res;
     }
 
     //TODO: Métodos uteis de getters, adders e removers

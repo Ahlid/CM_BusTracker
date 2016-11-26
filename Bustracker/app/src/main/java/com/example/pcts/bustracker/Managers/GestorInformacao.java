@@ -58,8 +58,8 @@ public class GestorInformacao  {
 
         //viagens
 
-        Viagem v1 = new Viagem(1,a1,c,new Date(2016,11,26,10,10,10),TipoViagem.IDA);
-        Viagem v2 = new Viagem(2,a1,c,new Date(2016,11,26,11,10,10),TipoViagem.VOLTA);
+        Viagem v1 = new Viagem(1,a1,c,new Date(2016,11,26,15,10,10),TipoViagem.IDA);
+        Viagem v2 = new Viagem(2,a1,c,new Date(2016,11,26,15,10,10),TipoViagem.VOLTA);
 
         Viagem v3 = new Viagem(3,a2,c,new Date(2016,11,26,10,40,10),TipoViagem.IDA);
         Viagem v4 = new Viagem(4,a2,c,new Date(2016,11,26,11,40,10),TipoViagem.VOLTA);
