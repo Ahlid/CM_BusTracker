@@ -20,7 +20,7 @@
         android:id="@+id/textView" />
 
     <Button
-        android:text="Button"
+        android:text="ver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
@@ -28,4 +28,22 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="150dp"
         android:id="@+id/button" />
+
+    <Button
+        android:text="add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:layout_marginTop="43dp"
+        android:id="@+id/button2" />
+
+    <Button
+        android:text="Remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button2"
+        android:layout_alignStart="@+id/button2"
+        android:layout_marginTop="39dp"
+        android:id="@+id/button3" />
 </RelativeLayout>

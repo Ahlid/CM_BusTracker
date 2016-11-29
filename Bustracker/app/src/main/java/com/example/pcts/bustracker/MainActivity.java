@@ -19,6 +19,8 @@ import com.example.pcts.bustracker.Fragments.InfoFragment;
 import com.example.pcts.bustracker.Fragments.MainFragment;
 import com.example.pcts.bustracker.Fragments.NotificationsFragment;
 import com.example.pcts.bustracker.Fragments.QRcodeFragment;
+import com.example.pcts.bustracker.Managers.GestorFavoritos;
+import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,7 +41,11 @@ public class MainActivity extends FragmentActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+   super.onCreate(savedInstanceState);
+        GestorInformacao.getInstance();
+        GestorFavoritos.getInstance(this);
+
+
         setContentView(R.layout.activity_main);
 
         MainFragment fragment = new MainFragment();

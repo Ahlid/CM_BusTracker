@@ -96,7 +96,7 @@ public class GestorInformacao  {
     public Carreira findCarreiraById(int id){
 
         for (Carreira c : this.carreiras){
-            if(c.getNumero() == id){
+            if(c.getId() == id){
                 return c;
             }
         }

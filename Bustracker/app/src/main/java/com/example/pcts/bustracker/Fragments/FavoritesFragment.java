@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.R;
 
@@ -33,9 +34,29 @@ public class FavoritesFragment extends Fragment {
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Scan result");
-                builder.setMessage(GestorInformacao.getInstance().getParagems().toString()+"\n"+GestorInformacao.getInstance().getCarreiras().toString()+"\n"+GestorInformacao.getInstance().getAutocarros().toString()+"\n"+GestorInformacao.getInstance().getViagens()) ;
+                builder.setMessage(GestorFavoritos.getInstance(getContext()).toString()) ;
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+            }
+        });
+
+        Button b2 = (Button) rootView.findViewById(R.id.button2);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                GestorFavoritos.getInstance().addCarreira(GestorInformacao.getInstance().findCarreiraById(1));
+
+            }
+        });
+
+        Button b3 = (Button) rootView.findViewById(R.id.button3);
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                GestorFavoritos.getInstance().removeCarreira(GestorInformacao.getInstance().findCarreiraById(1));
+
             }
         });
 
