@@ -33,12 +33,13 @@ public class GestorInformacao  {
 
 
         //paragens
-        Paragem p1 = new Paragem(1, "Mercado", new LatLng(38.523451, -8.895326));
+        Paragem p1 = new Paragem(1, "Mercado", new LatLng(38.522850, -8.895599));
         Paragem p2 = new Paragem(2,"Lavagem Automatica", new LatLng(38.528479, -8.886475));
         Paragem p3 = new Paragem(3,"Loja Cidadão", new LatLng(38.528244, -8.882786));
-        Paragem p4 = new Paragem(4, "IPS", new LatLng(38.523601, -8.839417));
+        Paragem p4 = new Paragem(4, "Pedro", new LatLng(38.524812, -8.883864));
+        Paragem p5 = new Paragem(5, "IPS", new LatLng(38.523601, -8.839417));
 
-        this.addParagens(p1,p2,p3,p4);
+        this.addParagens(p1,p2,p3,p4,p5);
 
 
         //autocarros
@@ -54,12 +55,13 @@ public class GestorInformacao  {
         c.addParagem(p2);
         c.addParagem(p3);
         c.addParagem(p4);
+        c.addParagem(p5);
         carreiras.add(c);
 
         //viagens
 
-        Viagem v1 = new Viagem(1,a1,c,new Date(2016,11,26,15,10,10),TipoViagem.IDA);
-        Viagem v2 = new Viagem(2,a1,c,new Date(2016,11,26,15,10,10),TipoViagem.VOLTA);
+        Viagem v1 = new Viagem(1,a1,c,new Date(2016,11,26,17,10,10),TipoViagem.IDA);
+        Viagem v2 = new Viagem(2,a1,c,new Date(2016,11,26,17,10,10),TipoViagem.VOLTA);
 
         Viagem v3 = new Viagem(3,a2,c,new Date(2016,11,26,10,40,10),TipoViagem.IDA);
         Viagem v4 = new Viagem(4,a2,c,new Date(2016,11,26,11,40,10),TipoViagem.VOLTA);

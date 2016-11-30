@@ -15,10 +15,10 @@ public class DatabaseFavoritos  extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "BusTracker_DB";
     private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_NAME = "favorites_table";
-    private static final String COL_1 = "ID";
-    private static final String COL_2 = "TIPO";
-    private static final String COL_3 = "ID_FAV";
+    public static final String TABLE_NAME = "favorites_table";
+    public static final String COL_1 = "ID";
+    public static final String COL_2 = "TIPO";
+    public static final String COL_3 = "ID_FAV";
 
 
 
