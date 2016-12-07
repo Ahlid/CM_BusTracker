@@ -47,7 +47,7 @@ public class Paragem {
 
     @Override
     public String toString() {
-        return "Paragem{" +
+        return "ParagemActivity{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", posicao=" + posicao +

@@ -99,7 +99,7 @@ public class Carreira {
 
     @Override
     public String toString() {
-        return "Carreira{" +
+        return "CarreiraActivity{" +
                 "id=" + id +
                 ", numero=" + numero +
                 ", nome='" + nome + '\'' +

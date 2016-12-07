@@ -44,9 +44,7 @@ public class FavoritesFragment extends Fragment {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 GestorFavoritos.getInstance().addCarreira(GestorInformacao.getInstance().findCarreiraById(1));
-
             }
         });
 

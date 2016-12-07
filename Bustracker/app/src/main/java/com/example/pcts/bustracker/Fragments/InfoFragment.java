@@ -50,8 +50,8 @@ public class InfoFragment extends Fragment {
     public InfoFragment(){
 
         PARAGENS = "Paragens";
-        CARREIRAS = "Carreiras";
-        CARREIRAS_PARAGEM = "Carreiras & Paragem";
+        CARREIRAS = "CarreiraActivity";
+        CARREIRAS_PARAGEM = "CarreiraActivity & ParagemActivity";
         selected =CARREIRAS;
     }
 
@@ -130,7 +130,7 @@ public class InfoFragment extends Fragment {
                }else if(s.equals(CARREIRAS)){
                    selected = CARREIRAS;
                }else {
-                   selected=CARREIRAS_PARAGEM;
+                   selected = CARREIRAS_PARAGEM;
                }
 
                 init(selected);
@@ -144,9 +144,6 @@ public class InfoFragment extends Fragment {
 
         initHistory(tab);
         initSearch(tab);
-
-
-
 
     }
 
