@@ -11,16 +11,16 @@ public class Viagem implements Comparable{
     private int id;
     private Autocarro autocarro;
     private Carreira  carreira;
-    private Date partida;
-    private Paragem actual;
+    private Date dataPartida;
+    private Paragem paragemAtual;
     private TipoViagem tipoViagem;
 
-    public Viagem(int id,Autocarro autocarro, Carreira carreira, Date partida, TipoViagem tipoViagem) {
+    public Viagem(int id,Autocarro autocarro, Carreira carreira, Date dataPartida, TipoViagem tipoViagem) {
         this.id=id;
         this.autocarro = autocarro;
         this.carreira = carreira;
-        this.partida = partida;
-        this.actual = carreira.getParagem(0);
+        this.dataPartida = dataPartida;
+        this.paragemAtual = carreira.getParagem(0);
         this.tipoViagem = tipoViagem;
     }
 
@@ -40,20 +40,20 @@ public class Viagem implements Comparable{
         this.carreira = carreira;
     }
 
-    public Date getPartida() {
-        return partida;
+    public Date getDataPartida() {
+        return dataPartida;
     }
 
-    public void setPartida(Date partida) {
-        this.partida = partida;
+    public void setDataPartida(Date dataPartida) {
+        this.dataPartida = dataPartida;
     }
 
-    public Paragem getActual() {
-        return actual;
+    public Paragem getParagemAtual() {
+        return paragemAtual;
     }
 
-    public void setActual(Paragem actual) {
-        this.actual = actual;
+    public void setParagemAtual(Paragem paragemAtual) {
+        this.paragemAtual = paragemAtual;
     }
 
     public int getId() {
@@ -77,10 +77,8 @@ public class Viagem implements Comparable{
 
         Viagem v = (Viagem) o ;
 
-
-
-        int timeO = v.partida.getHours()*60*60 + v.partida.getMinutes() *60 + v.partida.getSeconds();
-        int timeT = this.partida.getHours()*60*60 + this.partida.getMinutes()*60 + this.partida.getSeconds();
+        int timeO = v.dataPartida.getHours()*60*60 + v.dataPartida.getMinutes() *60 + v.dataPartida.getSeconds();
+        int timeT = this.dataPartida.getHours()*60*60 + this.dataPartida.getMinutes()*60 + this.dataPartida.getSeconds();
 
         return timeT - timeO;
 
@@ -92,8 +90,8 @@ public class Viagem implements Comparable{
                 "id=" + id +
                 ", autocarro=" + autocarro +
                 ", carreira=" + carreira +
-                ", partida=" + partida +
-                ", actual=" + actual +
+                ", dataPartida=" + dataPartida +
+                ", paragemAtual=" + paragemAtual +
                 ", tipoViagem=" + tipoViagem +
                 '}';
     }
