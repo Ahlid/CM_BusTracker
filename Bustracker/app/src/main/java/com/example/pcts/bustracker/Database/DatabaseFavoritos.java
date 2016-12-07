@@ -21,8 +21,6 @@ public class DatabaseFavoritos  extends SQLiteOpenHelper {
     public static final String COL_3 = "ID_FAV";
 
 
-
-
     public DatabaseFavoritos(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

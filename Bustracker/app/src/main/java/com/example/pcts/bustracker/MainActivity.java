@@ -9,24 +9,17 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.pcts.bustracker.Fragments.FavoritesFragment;
 import com.example.pcts.bustracker.Fragments.InfoFragment;
-import com.example.pcts.bustracker.Fragments.MainFragment;
+import com.example.pcts.bustracker.Fragments.Map.MainFragment;
 import com.example.pcts.bustracker.Fragments.NotificationsFragment;
 import com.example.pcts.bustracker.Fragments.QRcodeFragment;
 import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
