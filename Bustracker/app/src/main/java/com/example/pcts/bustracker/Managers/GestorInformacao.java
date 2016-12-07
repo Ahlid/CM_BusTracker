@@ -158,7 +158,7 @@ public class GestorInformacao  {
 
 
         for(Viagem v : this.viagens){
-            if(this.isTimeAfter(v.getPartida()) && v.getCarreira().verificarPassagem(v.getActual(),p,v.getTipoViagem())){
+            if(this.isTimeAfter(v.getDataPartida()) && v.getCarreira().verificarPassagem(v.getParagemAtual(),p,v.getTipoViagem())){
              aux.add(v);
 
                 if(aux.size() > 4){
@@ -185,7 +185,7 @@ public class GestorInformacao  {
         List<Viagem> aux = new ArrayList<>();
 
         for (Viagem v : this.viagens){
-            if(isTimeAfter(v.getPartida()) && v.getCarreira().getId() == c.getId()){
+            if(isTimeAfter(v.getDataPartida()) && v.getCarreira().getId() == c.getId()){
                 aux.add(v);
 
                 if(aux.size() > 4)
