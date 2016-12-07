@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.pcts.bustracker.Activities.CarreiraActivity;
+
 import com.example.pcts.bustracker.R;
 
 
@@ -28,7 +29,7 @@ public class NotificationsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
         ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("Notificações");
 
-
+        
         Button buttton = (Button) rootView.findViewById(R.id.button7);
         buttton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +39,7 @@ public class NotificationsFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
 
         // Inflate the layout for this fragment
         return rootView;

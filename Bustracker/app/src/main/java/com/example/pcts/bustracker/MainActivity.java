@@ -20,6 +20,7 @@ import com.example.pcts.bustracker.Fragments.NotificationsFragment;
 import com.example.pcts.bustracker.Fragments.QRcodeFragment;
 import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
+import com.example.pcts.bustracker.Managers.GestorNotificacao;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -37,6 +38,7 @@ public class MainActivity extends FragmentActivity
    super.onCreate(savedInstanceState);
         GestorInformacao.getInstance();
         GestorFavoritos.getInstance(this);
+        GestorNotificacao.getInstance(this);
 
 
         setContentView(R.layout.activity_main);

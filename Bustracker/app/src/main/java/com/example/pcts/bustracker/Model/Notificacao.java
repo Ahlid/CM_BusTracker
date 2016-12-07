@@ -8,10 +8,17 @@ import java.util.Date;
 
 public class Notificacao {
 
-    private int id;
+    private long id;
     private Paragem paragem;
     private Carreira carreira;
     private int minutos;
+
+    public Notificacao(long id,Paragem paragem, Carreira carreira, int minutos) {
+        this.paragem = paragem;
+        this.carreira = carreira;
+        this.minutos = minutos;
+        this.id = id;
+    }
 
     public Notificacao(Paragem paragem, Carreira carreira, int minutos) {
         this.paragem = paragem;
@@ -43,11 +50,22 @@ public class Notificacao {
         this.minutos = minutos;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Notificacao{" +
+                "id=" + id +
+                ", paragem=" + paragem +
+                ", carreira=" + carreira +
+                ", minutos=" + minutos +
+                '}';
     }
 }

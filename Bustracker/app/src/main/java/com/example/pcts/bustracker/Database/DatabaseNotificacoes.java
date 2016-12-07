@@ -1,6 +1,8 @@
 package com.example.pcts.bustracker.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -10,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseNotificacoes extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "BusTracker_DB";
+    private static final String DATABASE_NAME = "BusTracker_DB_n";
     private static final int DATABASE_VERSION = 1;
     public static final String TABLE_NAME = "notfications_table";
     public static final String COL_1 = "ID";
@@ -37,6 +39,32 @@ public class DatabaseNotificacoes extends SQLiteOpenHelper {
 
     }
 
+    public long insertData(int idCarreira, int idParagem, int minutos) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
-    //TODO: delete, insert, get
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2, idCarreira);
+        contentValues.put(COL_3, idParagem);
+        contentValues.put(COL_4, minutos);
+
+       return db.insert(TABLE_NAME, null, contentValues);
+
+
+
+    }
+
+    public Cursor getAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_NAME, null);
+        return res;
+    }
+
+    public Integer deleteData(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, COL_1+" = ? ", new String[]{id});
+
+    }
+
+
+    //TODO: delete, get
 }
