@@ -68,7 +68,24 @@ public class GestorNotificacao {
     }
 
     public boolean removeNotificacao(Notificacao n){
-        return this.notificacoes.remove(n);
+
+        boolean res =  this.notificacoes.remove(n);
+
+        if(res){
+            db.deleteData(Long.toString(n.getId()));
+        }
+
+        return res;
+    }
+
+    public boolean removeNotificacaoById(Long id){
+        boolean res = false;
+        for (Notificacao n : this.notificacoes) {
+            if(n.getId() == id){
+                res = this.removeNotificacao(n);
+            }
+        }
+        return res;
     }
 
     public List<Notificacao> getNotificacoes() {
