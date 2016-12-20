@@ -38,7 +38,7 @@ public class InfoFragment extends Fragment {
 
     String[] items;
 
-     ArrayList<String> listItems;
+    ArrayList<String> listItems;
 
     ArrayAdapter<String> adapter;
 
@@ -133,7 +133,7 @@ public class InfoFragment extends Fragment {
                    selected = CARREIRAS_PARAGEM;
                }
 
-                init(selected);
+               init(selected);
             }
         });
 
