@@ -24,7 +24,7 @@
         android:layout_marginLeft="48dp">
 
         <TextView
-            android:id="@+id/nome_carreira"
+            android:id="@+id/hora"
             android:layout_marginTop="18dp"
             android:textSize="25dp"
             android:text="TextView"

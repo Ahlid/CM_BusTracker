@@ -5,20 +5,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.example.pcts.bustracker.MainActivity;
 import com.example.pcts.bustracker.R;
 
 import java.util.ArrayList;

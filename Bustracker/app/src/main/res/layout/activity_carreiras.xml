@@ -11,5 +11,27 @@
     tools:context="com.example.pcts.bustracker.Activities.CarreiraActivity">
 
 
+    <TextView
+        android:text="Em circulação"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1" />
+
+    <ListView
+        android:id="@+id/em_circulacao"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:text="Próximas partidas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2" />
+
+    <ListView
+        android:id="@+id/proximas_partidas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </RelativeLayout>

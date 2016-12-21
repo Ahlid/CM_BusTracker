@@ -24,7 +24,7 @@
         android:layout_marginLeft="48dp">
 
         <TextView
-            android:id="@+id/nome_carreira"
+            android:id="@+id/nome_paragem"
             android:layout_marginTop="18dp"
             android:textSize="25dp"
             android:text="TextView"
@@ -35,7 +35,26 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:text="TextView"
-            android:id="@+id/tempo_restante" />
+            android:id="@+id/tempo_desde_partida" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/wheelchair_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="64dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical = "true"
+        android:src="@drawable/common_signin_btn_icon_normal_dark" />
+
+    <ImageView
+        android:id="@+id/bicicle_image"
+        android:layout_marginRight="20dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical = "true"
+        android:src="@drawable/common_signin_btn_icon_normal_dark" />
+
 
 </RelativeLayout>

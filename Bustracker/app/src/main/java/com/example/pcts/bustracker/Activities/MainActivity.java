@@ -1,4 +1,4 @@
-package com.example.pcts.bustracker;
+package com.example.pcts.bustracker.Activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -21,6 +21,7 @@ import com.example.pcts.bustracker.Fragments.QRcodeFragment;
 import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Managers.GestorNotificacao;
+import com.example.pcts.bustracker.R;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;

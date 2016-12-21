@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.example.pcts.bustracker.Activities.CarreiraActivity;
 
+import com.example.pcts.bustracker.Activities.ParagemActivity;
 import com.example.pcts.bustracker.R;
 
 
@@ -30,12 +31,22 @@ public class NotificationsFragment extends Fragment {
         ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("Notificações");
 
 
-        Button buttton = (Button) rootView.findViewById(R.id.button7);
-        buttton.setOnClickListener(new View.OnClickListener() {
+        Button button = (Button) rootView.findViewById(R.id.button7);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ParagemActivity.class);
+                intent.putExtra(ParagemActivity.KEY_PARAGEM_INTENT, 1);
+                startActivity(intent);
+            }
+        });
+
+        Button button2 = (Button) rootView.findViewById(R.id.button8);
+        button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CarreiraActivity.class);
-                intent.putExtra("Carreira", 1);
+                intent.putExtra(CarreiraActivity.KEY_CARREIRA_INTENT, 1);
                 startActivity(intent);
             }
         });
