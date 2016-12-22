@@ -97,6 +97,10 @@ public class Carreira {
 
     }
 
+    public List<Paragem> getTrajeto() {
+        return trajeto;
+    }
+
     @Override
     public String toString() {
         return "CarreiraActivity{" +

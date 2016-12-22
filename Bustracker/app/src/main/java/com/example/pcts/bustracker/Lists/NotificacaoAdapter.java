@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -61,6 +62,17 @@ public class NotificacaoAdapter extends BaseAdapter{
             TextView nomeCarreira = (TextView) v.findViewById(R.id.notificacao_carreira);
             TextView minutos = (TextView) v.findViewById(R.id.notificacao_tempo);
 
+            ImageView trash = (ImageView) v.findViewById(R.id.notificacao_apagar);
+
+            trash.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Notificacao n = noificacoes.get(position);
+                    GestorNotificacao.getInstance().removeNotificacao(n);
+                    notifyDataSetChanged();
+                }
+            });
+
             nomeParagem.setText(this.noificacoes.get(position).getParagem().getNome());
             nomeCarreira.setText("Carreia " + this.noificacoes.get(position).getCarreira().getNumero());
             minutos.setText(this.noificacoes.get(position).getMinutos()+" Minutos");
@@ -68,9 +80,6 @@ public class NotificacaoAdapter extends BaseAdapter{
 
             Switch switc = (Switch) v.findViewById(R.id.switch_notificacao);
             switc.setChecked(this.noificacoes.get(position).getEstado());
-
-            final NotificacaoAdapter that = this;
-
             switc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -84,7 +93,7 @@ public class NotificacaoAdapter extends BaseAdapter{
                     GestorNotificacao.getInstance().removeNotificacao(n);
                     GestorNotificacao.getInstance().addNotificacao(n);
                     GestorNotificacao.getInstance().order();
-                    that.notifyDataSetChanged();
+                    notifyDataSetChanged();
 
                 }
             });
@@ -95,14 +104,10 @@ public class NotificacaoAdapter extends BaseAdapter{
                 @Override
                 public void onClick(View view) {
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle(""+noificacoes.get(position).getId());
-                    builder.setMessage(GestorNotificacao.getInstance().getNotificacaoById(1).toString()) ;
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                    int id = (int) noificacoes.get(position).getId();
 
                     Intent intent = new Intent(context, NovaNotificacaoActivity.class);
-                    intent.putExtra(NovaNotificacaoActivity.KEY_NOTIFICACAO_INTENT,noificacoes.get(position).getId());
+                    intent.putExtra(NovaNotificacaoActivity.KEY_NOTIFICACAO_INTENT,id);
                     context.startActivity(intent);
                 }
             });
