@@ -17,6 +17,7 @@ import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Managers.GestorNotificacao;
 import com.example.pcts.bustracker.Model.Carreira;
+import com.example.pcts.bustracker.Model.Notificacao;
 import com.example.pcts.bustracker.Model.Paragem;
 import com.example.pcts.bustracker.Model.Viagem;
 import com.example.pcts.bustracker.R;
@@ -77,11 +78,7 @@ public class ParagemActivity extends AppCompatActivity {
             case R.id.ver_no_mapa:
                 //TODO - Chamar a atividade ou ir para o fragmento
                 return true;
-            case R.id.criar_notificacao:
-                //Intent intent = new Intent(this, NovaNotificacaoActivity.class);
-                //intent.putExtra(ParagemActivity.KEY_PARAGEM_INTENT, 1);
-                //startActivity(intent);
-                return true;
+
             case R.id.adicionar_favoritos:
                 boolean foiIntroduzido = GestorFavoritos.getInstance().addParagem(this.paragem);
                 if(foiIntroduzido){

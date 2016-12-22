@@ -1,5 +1,6 @@
 package com.example.pcts.bustracker.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -19,6 +20,7 @@ import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Model.Autocarro;
 import com.example.pcts.bustracker.Model.Carreira;
+import com.example.pcts.bustracker.Model.Notificacao;
 import com.example.pcts.bustracker.Model.Viagem;
 import com.example.pcts.bustracker.R;
 
@@ -53,7 +55,7 @@ public class CarreiraActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_paragem_menu, menu);
+        inflater.inflate(R.menu.activity_carreira_menu, menu);
 
         return true;
     }
@@ -84,9 +86,10 @@ public class CarreiraActivity extends AppCompatActivity {
                 //TODO - Chamar a atividade ou ir para o fragmento
                 return true;
             case R.id.criar_notificacao:
-                //Intent intent = new Intent(this, NovaNotificacaoActivity.class);
-                //intent.putExtra(ParagemActivity.KEY_CARREIRA_INTENT, 1);
-                //startActivity(intent);
+                Intent intent = new Intent(this, NovaNotificacaoActivity.class);
+                Notificacao notificacao = new Notificacao(null,this.carreira,0);
+                intent.putExtra(NovaNotificacaoActivity.KEY_NOTIFICACAO_INTENT, notificacao.getId());
+                startActivity(intent);
                 return true;
             case R.id.adicionar_favoritos:
                 boolean foiIntroduzido = GestorFavoritos.getInstance().addCarreira(this.carreira);
@@ -148,7 +151,6 @@ public class CarreiraActivity extends AppCompatActivity {
 
     }
 
-    //TODO calcular a diferença de tempo entre a hora atual e a hora da partida
     private String calcularTempoRestante(Date date){
         Date now = new Date();
         long time = date.getTime() - now.getTime();
@@ -176,17 +178,6 @@ public class CarreiraActivity extends AppCompatActivity {
                 listaDeItemsProximasPartidas.add(mapaItem);
             }
         }
-
-        /*
-        //Para testes
-        for(int i=0; i<4 ; i++){
-            HashMap<String, String> mapaItem = new HashMap<String, String>();
-            mapaItem.put("hora", "15:15");
-            mapaItem.put("tempo_restante", "Daqui a 10 minutos");
-            listaDeItemsProximasPartidas.add(mapaItem);
-
-        }
-        */
 
         ListAdapter adapter = new SimpleAdapter(
                 this.getApplicationContext(), listaDeItemsProximasPartidas,

@@ -1,10 +1,7 @@
 package com.example.pcts.bustracker.Activities;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.pcts.bustracker.Lists.StandartSpinner;
-import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Managers.GestorNotificacao;
 import com.example.pcts.bustracker.Model.Carreira;
@@ -33,8 +29,7 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
     public final static String KEY_NOTIFICACAO_INTENT = "Notificacao";
     private GestorNotificacao gestorNotificacao;
     private Notificacao notificacao;
-    private Carreira carreiraAtual;
-    private Paragem paragemAtual;
+
 
 
     @Override
@@ -48,16 +43,10 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
 
         this.notificacao = gestorNotificacao.getNotificacaoById(notificacaoId);
 
-
-
         if(this.notificacao == null){
-            newNotificacao();
+            novaNotificacao();
         }else{
-            this.carreiraAtual = notificacao.getCarreira();
-            this.paragemAtual = notificacao.getParagem();
-
             editarNotificacao();
-            
         }
 
         configSpinner();
@@ -65,6 +54,10 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
     }
 
     private void configSpinner() {
+
+        final Carreira carreiraAtual = this.notificacao.getCarreira();
+        final Paragem paragemAtual = this.notificacao.getParagem();
+
         List<StandartSpinner> carreirasListaSpinner = new ArrayList<>();
         List<StandartSpinner> paragensListaSpinner = new ArrayList<>();
         List<Carreira> listaCarreiras= GestorInformacao.getInstance().getCarreiras();
@@ -73,90 +66,132 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
             carreirasListaSpinner.add(new StandartSpinner(c.getId(), c.getNumero() + " " + c.getNome()));
         }
 
-        carreirasListaSpinner.add(new StandartSpinner(5, "Teste"));
+        if(carreiraAtual == null){
 
-        if(this.carreiraAtual == null){
+            for(Carreira carreira : GestorInformacao.getInstance().getCarreiras()){
+                carreirasListaSpinner.add(new StandartSpinner(carreira.getId(), carreira.getNome()));
+            }
 
-            paragensListaSpinner.add(new StandartSpinner(-1, "Escolha a Carreira"));
+        } else {
 
-        }else{
-            List<Paragem> listaParagens= this.carreiraAtual.getTrajeto();
+            for(Carreira carreira : GestorInformacao.getInstance().getCarreiras()){
+                carreirasListaSpinner.add(new StandartSpinner(carreira.getId(), carreira.getNome()));
+            }
 
+            List<Paragem> listaParagens= carreiraAtual.getTrajeto();
             for(Paragem p : listaParagens){
                 paragensListaSpinner.add(new StandartSpinner(p.getId(), p.getNome()));
             }
         }
 
-
-        Spinner spinner = (Spinner)this.findViewById(R.id.spinner_notificacao_carreira);
-        ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
+        //Adaptação das listas aos spinners
+        final Spinner carreiraSpinner = (Spinner)this.findViewById(R.id.spinner_notificacao_carreira);
+        ArrayAdapter arrayAdapterCarreira = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, carreirasListaSpinner);
-        spinner.setAdapter(spinnerArrayAdapter);
+        carreiraSpinner.setAdapter(arrayAdapterCarreira);
 
-        Spinner spinner2 = (Spinner)this.findViewById(R.id.spinner_notificacao_paragem);
-        ArrayAdapter spinnerArrayAdapter2 = new ArrayAdapter(this,
+        final Spinner paragemSpinner = (Spinner)this.findViewById(R.id.spinner_notificacao_paragem);
+        ArrayAdapter arrayAdapterParagem = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, paragensListaSpinner);
-        spinner2.setAdapter(spinnerArrayAdapter2);
+        paragemSpinner.setAdapter(arrayAdapterParagem);
+
+        carreiraSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+
+                //Em caso de uma carreira diferente ser escolhida é necessário encontrar novamente o trajeto
+                StandartSpinner standartSpinner = (StandartSpinner) parent.getItemAtPosition(pos);
+                Carreira carreiraSelecionada = GestorInformacao.getInstance().findCarreiraById(standartSpinner.id);
+
+                List<Paragem> listaParagens= carreiraSelecionada.getTrajeto();
+                List<StandartSpinner> paragensListaSpinner = new ArrayList<>();
+                for(Paragem p : listaParagens){
+                    paragensListaSpinner.add(new StandartSpinner(p.getId(), p.getNome()));
+                }
+                ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(getApplicationContext(),
+                        android.R.layout.simple_spinner_item, paragensListaSpinner);
+                paragemSpinner.setAdapter(spinnerArrayAdapter);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+                paragemSpinner.setAdapter(null);
+
+            }
+        });
 
 
-        if(this.carreiraAtual != null){
-            spinner.setSelection(listaCarreiras.indexOf(this.carreiraAtual));
+        if(carreiraAtual != null){
+            carreiraSpinner.setSelection(listaCarreiras.indexOf(carreiraAtual));
         }
 
-        if(this.paragemAtual != null){
-            spinner2.setSelection(this.carreiraAtual.getTrajeto().indexOf(this.paragemAtual));
+        if(paragemAtual != null){
+            paragemSpinner.setSelection(carreiraAtual.getTrajeto().indexOf(paragemAtual));
         }
 
     }
 
     private void editarNotificacao() {
+
         this.getSupportActionBar().setTitle("Editar Notificação");
 
-        Button b = (Button) this.findViewById(R.id.confirmar_notificacao);
-        final Spinner spinner = (Spinner)this.findViewById(R.id.spinner_notificacao_paragem);
-        final EditText min = ((EditText) this.findViewById(R.id.minutos_notificacao));
-        ((EditText)this.findViewById(R.id.minutos_notificacao)).setText(notificacao.getMinutos()+"");
+        Button confirmacaoButton = (Button) this.findViewById(R.id.confirmar_notificacao);
+        final Spinner paragensSpinner = (Spinner)this.findViewById(R.id.spinner_notificacao_paragem);
+        final Spinner carreirasSpinner = (Spinner)this.findViewById(R.id.spinner_notificacao_carreira);
 
-        b.setOnClickListener(new View.OnClickListener() {
+        final EditText minutosEditText = ((EditText) this.findViewById(R.id.minutos_notificacao));
+        minutosEditText.setText(Integer.toString(notificacao.getMinutos()));
+
+        confirmacaoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                notificacao.setCarreira(GestorInformacao.getInstance().findCarreiraById(1));
-                StandartSpinner c = (StandartSpinner) spinner.getSelectedItem();
-                notificacao.setParagem( GestorInformacao.getInstance().findParagemById(c.id));
 
-                int minutos = Integer.parseInt(min.getText().toString());
+                StandartSpinner carreiraSTDSpinner = (StandartSpinner) carreirasSpinner.getSelectedItem();
+                Carreira carreira = GestorInformacao.getInstance().findCarreiraById(carreiraSTDSpinner.id);
+                notificacao.setCarreira(carreira);
+
+                StandartSpinner paragemSTDSpinner = (StandartSpinner) paragensSpinner.getSelectedItem();
+                Paragem paragem = GestorInformacao.getInstance().findParagemById(paragemSTDSpinner.id);
+                notificacao.setParagem(paragem);
+
+                int minutos = Integer.parseInt(minutosEditText.getText().toString());
                 notificacao.setMinutos(minutos);
-
-
-
-
 
                 finish();
             }
         });
 
-
     }
 
-    private void newNotificacao() {
+    private void novaNotificacao() {
+        
         this.getSupportActionBar().setTitle("Criar Notificação");
 
-        Button b = (Button) this.findViewById(R.id.confirmar_notificacao);
-        final Spinner spinner = (Spinner)this.findViewById(R.id.spinner_notificacao_paragem);
-        final EditText min = ((EditText) this.findViewById(R.id.minutos_notificacao));
+        Button confirmacaoButton = (Button) this.findViewById(R.id.confirmar_notificacao);
+        final Spinner paragensSpinner = (Spinner)this.findViewById(R.id.spinner_notificacao_paragem);
+        final Spinner carreirasSpinner = (Spinner)this.findViewById(R.id.spinner_notificacao_carreira);
+        final EditText minutosEditText = ((EditText) this.findViewById(R.id.minutos_notificacao));
 
-
-
-        b.setOnClickListener(new View.OnClickListener() {
+        confirmacaoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Carreira carreira =  (GestorInformacao.getInstance().findCarreiraById(1));
-                StandartSpinner c = (StandartSpinner) spinner.getSelectedItem();
-                Paragem paragem = ( GestorInformacao.getInstance().findParagemById(c.id));
-                int minutos = Integer.parseInt(min.getText().toString());
+                StandartSpinner carreiraSTDSpinner = (StandartSpinner) carreirasSpinner.getSelectedItem();
+                Carreira carreira = GestorInformacao.getInstance().findCarreiraById(carreiraSTDSpinner.id);
+                notificacao.setCarreira(carreira);
 
-                GestorNotificacao.getInstance().addNotificacao(new Notificacao(paragem,carreira,minutos));
+                StandartSpinner paragemSTDSpinner = (StandartSpinner) paragensSpinner.getSelectedItem();
+                Paragem paragem = GestorInformacao.getInstance().findParagemById(paragemSTDSpinner.id);
+                notificacao.setParagem(paragem);
+
+                int minutos = Integer.parseInt(minutosEditText.getText().toString());
+                notificacao.setMinutos(minutos);
+
+                Notificacao notificacao = new Notificacao(paragem,carreira,minutos);
+                GestorNotificacao.getInstance().addNotificacao(notificacao);
 
                 finish();
             }
