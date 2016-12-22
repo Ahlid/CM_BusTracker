@@ -1,6 +1,7 @@
 package com.example.pcts.bustracker.Lists;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.pcts.bustracker.Activities.NovaNotificacaoActivity;
+import com.example.pcts.bustracker.Activities.ParagemActivity;
 import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorNotificacao;
 import com.example.pcts.bustracker.Model.Notificacao;
@@ -50,7 +53,7 @@ public class NotificacaoAdapter extends BaseAdapter{
         }
 
         @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, final View convertView, ViewGroup parent) {
 
             final View v = View.inflate(context, R.layout.list_row_notificacoes, null);
 
@@ -91,11 +94,16 @@ public class NotificacaoAdapter extends BaseAdapter{
             l.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle(noificacoes.get(position).toString());
-                    builder.setMessage(GestorFavoritos.getInstance(context).toString()) ;
+                    builder.setTitle(""+noificacoes.get(position).getId());
+                    builder.setMessage(GestorNotificacao.getInstance().getNotificacaoById(1).toString()) ;
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
+
+                    Intent intent = new Intent(context, NovaNotificacaoActivity.class);
+                    intent.putExtra(NovaNotificacaoActivity.KEY_NOTIFICACAO_INTENT,noificacoes.get(position).getId());
+                    context.startActivity(intent);
                 }
             });
 

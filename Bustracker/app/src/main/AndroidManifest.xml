@@ -46,6 +46,8 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".Activities.NovaNotificacaoActivity"></activity>
+
     </application>
 
 </manifest>
