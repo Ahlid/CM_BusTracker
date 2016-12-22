@@ -9,6 +9,10 @@
 
     <item
         android:id="@+id/adicionar_favoritos"
-        android:title="Adicionar favoritos" />
+        android:title="Adicionar aos Favoritos" />
+
+    <item
+        android:id="@+id/remover_favoritos"
+        android:title="Remover dos Favoritos" />
 
 </menu>

@@ -70,12 +70,12 @@ public class GestorFavoritos {
 
 
     public List<Carreira> getCarreiras(){
-        return this.carreiras;
+        return new ArrayList<>(this.carreiras);
 
     }
 
     public List<Paragem> getParagens() {
-        return paragens;
+        return new ArrayList<>(paragens);
     }
 
     public boolean addCarreira(Carreira c){
