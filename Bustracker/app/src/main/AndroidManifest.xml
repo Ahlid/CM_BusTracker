@@ -42,6 +42,7 @@
         </activity>
         <activity android:name=".Activities.CarreiraActivity" />
         <activity android:name=".Activities.ParagemActivity"></activity>
+        <activity android:name=".Activities.NovaNotificacaoActivity"></activity>
     </application>
 
 </manifest>

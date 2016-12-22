@@ -1,6 +1,7 @@
 package com.example.pcts.bustracker.Activities;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.pcts.bustracker.Managers.GestorInformacao;
@@ -27,7 +28,15 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
 
         this.gestorNotificacao = GestorNotificacao.getInstance();
         int notificacaoId = getIntent().getIntExtra(KEY_NOTIFICACAO_INTENT, -1);
+
         this.notificacao = gestorNotificacao.getNotificacaoById(notificacaoId);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(""+notificacaoId);
+        builder.setMessage("") ;
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
 
         if(this.notificacao == null){
             newNotificacao();
