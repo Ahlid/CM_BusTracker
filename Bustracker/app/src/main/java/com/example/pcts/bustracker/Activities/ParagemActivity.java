@@ -4,11 +4,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
+import com.example.pcts.bustracker.Managers.GestorNotificacao;
 import com.example.pcts.bustracker.Model.Carreira;
 import com.example.pcts.bustracker.Model.Paragem;
 import com.example.pcts.bustracker.Model.Viagem;
@@ -36,6 +41,32 @@ public class ParagemActivity extends AppCompatActivity {
         this.getSupportActionBar().setTitle("Paragem " + this.paragem.getNome());
         this.atualizarListaProximaPassagens();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_paragem_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.ver_no_mapa:
+                //TODO - Chamar a atividade ou ir para o fragmento
+                return true;
+            case R.id.criar_notificacao:
+                //TODO - Chamar a atividade de criação de notificação com a paragem
+                return true;
+            case R.id.adicionar_favoritos:
+                GestorFavoritos.getInstance().addParagem(this.paragem);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     private void atualizarListaProximaPassagens(){
 

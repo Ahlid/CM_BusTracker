@@ -2,7 +2,11 @@ package com.example.pcts.bustracker.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.text.format.DateUtils;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
@@ -42,7 +46,11 @@ public class CarreiraActivity extends AppCompatActivity {
         this.atualizarAutocarrosEmCirculacao();
         this.atualizarProximasPartidas();
 
+
+
     }
+
+
 
     private void atualizarAutocarrosEmCirculacao() {
 
