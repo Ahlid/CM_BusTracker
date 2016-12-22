@@ -7,38 +7,107 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/notificacao"
+        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/common_signin_btn_icon_focus_light"
-            android:id="@+id/imageView6"
-            android:layout_weight="1" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/common_signin_btn_icon_focus_dark"
-            android:id="@+id/imageView7"
-            android:layout_weight="1" />
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/ic_front_bus"
+                android:id="@+id/imageView5"
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal"/>
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/common_signin_btn_icon_dark"
-            android:id="@+id/imageView5"
-            android:layout_weight="1" />
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/notificacao_paragem"
+                android:layout_weight="1"
+                android:textAlignment="center" />
+        </LinearLayout>
 
-        <Switch
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:id="@+id/switch2"
-            android:layout_weight="1"
-            android:checked="true"
-            android:textOff="No"
-            android:textOn="Yes"
-            />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_front_bus"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/notificacao_carreira"
+                android:layout_weight="1"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/ic_timer_black_24dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/notificacao_tempo"
+                android:layout_weight="1"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch2"
+                android:layout_weight="1"
+                android:checked="true"
+                android:textOff="No"
+                android:textOn="Yes"
+                android:layout_marginRight="10dp"
+                />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/common_signin_btn_icon_focus_dark"
+                android:id="@+id/imageView"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="right"/>
+
+        </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>
