@@ -48,26 +48,31 @@ public class CarreiraActivity extends AppCompatActivity {
 
         List<Viagem> viagens = this.gestorInformacao.getViagens();
         ListView emCirculacaolistView = (ListView) this.findViewById(R.id.em_circulacao);
-        List<Map<String, String>> listaDeItemsEmCirculacao = new ArrayList<>();
+        List<Map<String, Object>> listaDeItemsEmCirculacao = new ArrayList<>();
 
         for (Viagem viagem: viagens) {
             //Viagem pertence a esta carreira
             if (viagem.getCarreira().getId() == this.carreira.getId()){
-                HashMap<String, String> mapaItem = new HashMap<String, String>();
+                HashMap<String, Object> mapaItem = new HashMap<String, Object>();
                 mapaItem.put("nome_paragem", viagem.getParagemAtual().getNome());
-                //TODO: calcular o tempo desde a partida da última paragem
-                mapaItem.put("tempo_desde_partida", ""); //Vazio propositadamente
+                mapaItem.put("tempo_desde_partida", "Partiu às " + viagem.getDataPartida().getHours() + ":" + viagem.getDataPartida().getMinutes());
+                mapaItem.put("bicycle_image",viagem.getAutocarro().isTemAcessoBicicleta());
+                mapaItem.put("wheelchair_image",viagem.getAutocarro().isTemAcessoCadeiraDeRodas());
                 listaDeItemsEmCirculacao.add(mapaItem);
             }
         }
 
         ListAdapter adapter = new SimpleAdapter(
                 this.getApplicationContext(), listaDeItemsEmCirculacao,
-                R.layout.proxima_carreira_item, new String[] {
-                "nome_paragem", "tempo_desde_partida"},
+                R.layout.em_circulacao_item, new String[] {
+                "nome_paragem", "tempo_desde_partida"
+                , "bicycle_image" , "wheelchair_image"
+                },
                 new int[]{
                         R.id.nome_paragem,
-                        R.id.tempo_desde_partida
+                        R.id.tempo_desde_partida,
+                        R.id.bicycle_image,
+                        R.id.wheelchair_image
                 }
         );
 
@@ -75,30 +80,49 @@ public class CarreiraActivity extends AppCompatActivity {
 
     }
 
+    //TODO calcular a diferença de tempo entre a hora atual e a hora da partida
+    private String calcularTempoRestante(Date date){
+        Date now = new Date();
+        long time = date.getTime() - now.getTime();
+        Date subtracao = new Date(time);
+
+        int horas = subtracao.getHours();
+        int minutos = subtracao.getMinutes();
+        return "Daqui a " + horas + " horas e " +
+                minutos + " minutos";
+    }
 
     private void atualizarProximasPartidas() {
 
         List<Viagem> viagens = this.gestorInformacao.getProximasPartidas(this.carreira);
-        ListView proximasPartidasView = (ListView) this.findViewById(R.id.lista_proximas_carreiras);
+        ListView proximasPartidasView = (ListView) this.findViewById(R.id.proximas_partidas);
         List<Map<String, String>> listaDeItemsProximasPartidas = new ArrayList<>();
+        proximasPartidasView.setEnabled(false);
 
         for (Viagem viagem: viagens) {
             //Viagem pertence a esta carreira
             if (viagem.getCarreira().getId() == this.carreira.getId()){
                 HashMap<String, String> mapaItem = new HashMap<String, String>();
-                //TODO: Mostrar em Hora e Minuto
-                mapaItem.put("hora", viagem.getDataPartida().toString());
-
-                //TODO calcular a diferença de tempo entre a hora atual e a hora da partida
-                //Date tempoRestante = new Date (viagem.getDataPartida().getTime() - (new Date()).getTime());
-                mapaItem.put("tempo_restante", ""); //Vazio propositadamente
+                mapaItem.put("hora", viagem.getDataPartida().getHours() + ":" + viagem.getDataPartida().getMinutes());
+                mapaItem.put("tempo_restante", calcularTempoRestante(viagem.getDataPartida()));
                 listaDeItemsProximasPartidas.add(mapaItem);
             }
         }
 
+        /*
+        //Para testes
+        for(int i=0; i<4 ; i++){
+            HashMap<String, String> mapaItem = new HashMap<String, String>();
+            mapaItem.put("hora", "15:15");
+            mapaItem.put("tempo_restante", "Daqui a 10 minutos");
+            listaDeItemsProximasPartidas.add(mapaItem);
+
+        }
+        */
+
         ListAdapter adapter = new SimpleAdapter(
                 this.getApplicationContext(), listaDeItemsProximasPartidas,
-                R.layout.proxima_carreira_item, new String[] {
+                R.layout.proxima_partida_item, new String[] {
                 "hora", "tempo_restante"},
                 new int[]{
                         R.id.hora,

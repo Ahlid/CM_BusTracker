@@ -6,14 +6,6 @@
     android:layout_height="80dp"
     android:layout_marginLeft="20dp">
 
-    <ImageView
-        android:id="@+id/bus_image"
-        android:layout_gravity="center"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_centerVertical = "true"
-        android:src="@drawable/common_signin_btn_icon_normal_dark" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +13,7 @@
         android:orientation="vertical"
         android:layout_centerVertical = "true"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="48dp">
+        android:layout_marginLeft="52dp">
 
         <TextView
             android:id="@+id/nome_paragem"
@@ -38,23 +30,33 @@
             android:id="@+id/tempo_desde_partida" />
     </LinearLayout>
 
-    <ImageView
+    <com.example.pcts.bustracker.CustomComponents.ImageViewCheckable
         android:id="@+id/wheelchair_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginRight="64dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical = "true"
-        android:src="@drawable/common_signin_btn_icon_normal_dark" />
+        android:src="@drawable/ic_bicycle" />
 
-    <ImageView
-        android:id="@+id/bicicle_image"
+    <com.example.pcts.bustracker.CustomComponents.ImageViewCheckable
+        android:id="@+id/bicycle_image"
         android:layout_marginRight="20dp"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical = "true"
-        android:src="@drawable/common_signin_btn_icon_normal_dark" />
+        android:src="@drawable/ic_wheelchair"
+        android:layout_alignTop="@+id/wheelchair_image"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp" />
+
+    <ImageView
+        android:id="@+id/bus_image"
+        android:layout_gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@mipmap/ic_localizar"
+        android:layout_alignTop="@+id/wheelchair_image"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
