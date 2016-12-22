@@ -1,36 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="fill_parent"
+android:orientation="horizontal"
+android:layout_height="80dp"
+android:layout_marginLeft="20dp">
+
+<LinearLayout
     android:orientation="horizontal"
-    android:layout_height="80dp"
-    android:layout_marginLeft="20dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
 
     <ImageView
         android:id="@+id/paragem_image"
         android:layout_gravity="center"
         android:src="@drawable/common_signin_btn_icon_normal_dark"
-        android:layout_width="90dp"
-        android:layout_height="90dp" />
-
-
-    <ImageView
-        android:id="@+id/remove_paragem_favoritos"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginRight="64dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical = "true"
-        android:src="@drawable/common_signin_btn_icon_normal_dark" />
-
-    <ImageView
-        android:id="@+id/overflow_paragem_favoritos"
-        android:layout_marginRight="20dp"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical = "true"
-        android:src="@drawable/ic_more_vert_black_24dp" />
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_weight="2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,17 +26,44 @@
         android:orientation="vertical"
         android:layout_marginLeft="20dp"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/paragem_image">
+        android:layout_toEndOf="@+id/bus_image"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/nome_paragem_favoritos"
             android:layout_marginTop="18dp"
+            android:textSize="25dp"
             android:text="TextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15dp" />
+            android:ellipsize="end"/>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/remove_paragem_favoritos"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_more_vert_black_24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/overflow_paragem_favoritos"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_more_vert_black_24dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>
+
+
+</LinearLayout>

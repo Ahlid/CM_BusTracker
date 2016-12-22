@@ -8,9 +8,9 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:background="@drawable/notificacao"
-        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:layout_margin="5dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
 
@@ -21,9 +21,9 @@
             android:layout_weight="1">
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:srcCompat="@drawable/ic_front_bus"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_front_bus"
                 android:id="@+id/imageView5"
                 android:layout_weight="1"
                 android:layout_gravity="center_horizontal"/>
@@ -44,10 +44,10 @@
             android:layout_weight="1">
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_front_bus"
+                android:src="@drawable/ic_bus_stop"
                 android:layout_gravity="center_horizontal"/>
 
             <TextView
@@ -66,9 +66,9 @@
             android:layout_weight="1">
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:srcCompat="@drawable/ic_timer_black_24dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_timer_black_24dp"
                 android:layout_weight="1"
                 android:layout_gravity="center_horizontal"/>
 
@@ -93,15 +93,16 @@
                 android:id="@+id/switch2"
                 android:layout_weight="1"
                 android:checked="true"
-                android:textOff="No"
-                android:textOn="Yes"
-                android:layout_marginRight="10dp"
+                android:thumb="@drawable/thumb"
+                android:track="@drawable/track"
+                android:thumbTextPadding="5dp"
+                android:switchMinWidth="40dp"
                 />
 
             <ImageView
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/common_signin_btn_icon_focus_dark"
+                android:src="@drawable/common_signin_btn_icon_focus_dark"
                 android:id="@+id/imageView"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"

@@ -1,6 +1,7 @@
 package com.example.pcts.bustracker.Lists;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
@@ -11,6 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.pcts.bustracker.Activities.CarreiraActivity;
+import com.example.pcts.bustracker.Activities.ParagemActivity;
 import com.example.pcts.bustracker.Model.Paragem;
 import com.example.pcts.bustracker.R;
 
@@ -49,7 +52,7 @@ public class FavoritesAdapterParagem extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
 
         final View v = View.inflate(context, R.layout.list_row_favoritos_paragem, null);
 
@@ -82,13 +85,13 @@ public class FavoritesAdapterParagem extends BaseAdapter {
         });
 
 
-        ImageView overflow = (ImageView) v.findViewById(R.id.overflow_paragem_favoritos);
+        final ImageView overflow = (ImageView) v.findViewById(R.id.overflow_paragem_favoritos);
         overflow.setClickable(true);
 
         overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popup = new PopupMenu(context, v, Gravity.RIGHT);
+                PopupMenu popup = new PopupMenu(context, overflow, Gravity.RIGHT);
                 popup.getMenuInflater().inflate(R.menu.item_paragem_favoritos_menu,
                         popup.getMenu());
                 popup.show();
@@ -98,11 +101,25 @@ public class FavoritesAdapterParagem extends BaseAdapter {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("Scan result");
-                        builder.setMessage(item.getItemId()) ;
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
+                        int id = item.getItemId();
+
+                        switch (id){
+                            case R.id.detalhes_favoritos :
+                                Intent intent = new Intent(context, ParagemActivity.class);
+                                intent.putExtra(ParagemActivity.KEY_PARAGEM_INTENT, paragens.get(position).getId());
+                                context.startActivity(intent);
+                                break;
+
+                            case R.id.ver_no_mapa_favoritos:
+
+                                break;
+
+                            case R.id.criar_notificacao_favoritos:
+
+                                break;
+
+                            default:break;
+                        }
 
                         return  true;
                     }
