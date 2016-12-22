@@ -19,6 +19,7 @@ public class DatabaseNotificacoes extends SQLiteOpenHelper {
     public static final String COL_2 = "ID_CARREIRA";
     public static final String COL_3 = "ID_PARAGEM";
     public static final String COL_4 = "MINUTOS";
+    public static final String COL_5 = "ESTADO";
 
 
     public DatabaseNotificacoes(Context context) {
@@ -28,7 +29,7 @@ public class DatabaseNotificacoes extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create table " + TABLE_NAME + " ("+COL_1+" INTEGER PRIMARY KEY" +
-                " AUTOINCREMENT, "+COL_2+" INTEGER, "+COL_3+" INTEGER, "+COL_4+" INTEGER)");
+                " AUTOINCREMENT, "+COL_2+" INTEGER, "+COL_3+" INTEGER, "+COL_4+" INTEGER, "+COL_5+" INTEGER)");
     }
 
     @Override
@@ -39,15 +40,16 @@ public class DatabaseNotificacoes extends SQLiteOpenHelper {
 
     }
 
-    public long insertData(int idCarreira, int idParagem, int minutos) {
+    public long insertData(int idCarreira, int idParagem, int minutos, boolean estado) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, idCarreira);
         contentValues.put(COL_3, idParagem);
         contentValues.put(COL_4, minutos);
+        contentValues.put(COL_5, estado? 1 : 0);
 
-       return db.insert(TABLE_NAME, null, contentValues);
+        return db.insert(TABLE_NAME, null, contentValues);
 
 
 

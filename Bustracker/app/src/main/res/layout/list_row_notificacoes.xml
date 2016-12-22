@@ -12,7 +12,8 @@
         android:padding="5dp"
         android:layout_margin="5dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linear_notificacao">
 
         <LinearLayout
             android:orientation="vertical"
@@ -90,13 +91,15 @@
             <Switch
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/switch2"
+                android:id="@+id/switch_notificacao"
                 android:layout_weight="1"
                 android:checked="true"
                 android:thumb="@drawable/thumb"
                 android:track="@drawable/track"
                 android:thumbTextPadding="5dp"
                 android:switchMinWidth="40dp"
+                android:textOn="On"
+                android:textOff="Off"
                 />
 
             <ImageView

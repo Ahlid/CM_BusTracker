@@ -1,11 +1,17 @@
 package com.example.pcts.bustracker.Lists;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.pcts.bustracker.Managers.GestorFavoritos;
+import com.example.pcts.bustracker.Managers.GestorNotificacao;
 import com.example.pcts.bustracker.Model.Notificacao;
 import com.example.pcts.bustracker.R;
 
@@ -55,6 +61,45 @@ public class NotificacaoAdapter extends BaseAdapter{
             nomeParagem.setText(this.noificacoes.get(position).getParagem().getNome());
             nomeCarreira.setText("Carreia " + this.noificacoes.get(position).getCarreira().getNumero());
             minutos.setText(this.noificacoes.get(position).getMinutos()+" Minutos");
+
+
+            Switch switc = (Switch) v.findViewById(R.id.switch_notificacao);
+            switc.setChecked(this.noificacoes.get(position).getEstado());
+
+            final NotificacaoAdapter that = this;
+
+            switc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    Notificacao n = noificacoes.get(position);
+                    if(b){
+                        n.setEstado(true);
+
+                    }else{
+                        n.setEstado(false);
+                    }
+                    GestorNotificacao.getInstance().removeNotificacao(n);
+                    GestorNotificacao.getInstance().addNotificacao(n);
+                    GestorNotificacao.getInstance().order();
+                    that.notifyDataSetChanged();
+
+                }
+            });
+
+            LinearLayout l = (LinearLayout) v.findViewById(R.id.linear_notificacao);
+            l.setClickable(true);
+            l.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(noificacoes.get(position).toString());
+                    builder.setMessage(GestorFavoritos.getInstance(context).toString()) ;
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+            });
+
+
 
 
             v.setTag(this.noificacoes.get(position).getId());

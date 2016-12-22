@@ -10,6 +10,7 @@ import com.example.pcts.bustracker.Model.Notificacao;
 import com.example.pcts.bustracker.Model.Paragem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,9 +36,17 @@ public class GestorNotificacao {
             Carreira carreira = GestorInformacao.getInstance().findCarreiraById(c.getInt(c.getColumnIndex(DatabaseNotificacoes.COL_2)));
             Paragem paragem = GestorInformacao.getInstance().findParagemById(c.getInt(c.getColumnIndex(DatabaseNotificacoes.COL_3)));
             int minutos = c.getInt(c.getColumnIndex(DatabaseNotificacoes.COL_4));
+            int estado = c.getInt(c.getColumnIndex(DatabaseNotificacoes.COL_5));
 
-            this.notificacoes.add(new Notificacao(id,paragem, carreira,minutos ));
+            Notificacao n = new Notificacao(id,paragem, carreira,minutos );
+
+            this.notificacoes.add(n);
+
+            n.setEstado(estado == 1? true : false);
+
         }
+
+        order();
 
 
     }
@@ -60,7 +69,7 @@ public class GestorNotificacao {
         if(res){
 
 
-           Long r= db.insertData(n.getCarreira().getId(), n.getParagem().getId(), n.getMinutos());
+           Long r= db.insertData(n.getCarreira().getId(), n.getParagem().getId(), n.getMinutos(), n.getEstado());
             n.setId(r);
         }
 
@@ -90,5 +99,25 @@ public class GestorNotificacao {
 
     public List<Notificacao> getNotificacoes() {
         return notificacoes;
+    }
+
+    public void order() {
+
+        Collections.sort(this.notificacoes);
+
+    }
+
+
+    public Notificacao getNotificacaoById(int id) {
+        Notificacao n = null;
+
+        for (Notificacao not: notificacoes ) {
+            if(not.getId() == id){
+                n = not;
+                break;
+            }
+        }
+
+        return n;
     }
 }

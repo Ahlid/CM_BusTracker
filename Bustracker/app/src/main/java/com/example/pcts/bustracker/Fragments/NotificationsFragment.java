@@ -3,10 +3,12 @@ package com.example.pcts.bustracker.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -83,6 +85,7 @@ View rootView;
 
         NotificacaoAdapter adapter = new NotificacaoAdapter(rootView.getContext(), notificacaos);
         listViewNotificacao.setAdapter(adapter);
+
 
     }
 
