@@ -30,7 +30,7 @@
         android:layout_height="48dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical = "true"
-        android:src="@drawable/common_signin_btn_icon_normal_dark" />
+        android:src="@drawable/ic_more_vert_black_24dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,15 +38,15 @@
         android:orientation="vertical"
         android:layout_marginLeft="20dp"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/bus_image">
+        android:layout_toEndOf="@+id/paragem_image">
 
         <TextView
             android:id="@+id/nome_paragem_favoritos"
             android:layout_marginTop="18dp"
-            android:textSize="25dp"
             android:text="TextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="15dp" />
 
     </LinearLayout>
 

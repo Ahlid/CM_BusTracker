@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/common_signin_btn_icon_focus_light"
+            android:id="@+id/imageView6"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/common_signin_btn_icon_focus_dark"
+            android:id="@+id/imageView7"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/common_signin_btn_icon_dark"
+            android:id="@+id/imageView5"
+            android:layout_weight="1" />
+
+        <Switch
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/switch2"
+            android:layout_weight="1"
+            android:checked="true"
+            android:textOff="No"
+            android:textOn="Yes"
+            />
+
+    </LinearLayout>
+</RelativeLayout>
