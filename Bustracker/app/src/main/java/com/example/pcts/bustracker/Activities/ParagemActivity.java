@@ -1,5 +1,6 @@
 package com.example.pcts.bustracker.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
@@ -46,6 +48,25 @@ public class ParagemActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_paragem_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu){
+
+        MenuItem itemAdicionarFavoritos = menu.findItem(R.id.adicionar_favoritos);
+        MenuItem itemRemoverFavoritos = menu.findItem(R.id.remover_favoritos);
+
+        if(GestorFavoritos.getInstance().getParagens().contains(this.paragem)){
+
+            itemAdicionarFavoritos.setVisible(false);
+            itemRemoverFavoritos.setVisible(true);
+        } else {
+            itemAdicionarFavoritos.setVisible(true);
+            itemRemoverFavoritos.setVisible(false);
+        }
+
         return true;
     }
 
@@ -57,10 +78,27 @@ public class ParagemActivity extends AppCompatActivity {
                 //TODO - Chamar a atividade ou ir para o fragmento
                 return true;
             case R.id.criar_notificacao:
-                //TODO - Chamar a atividade de criação de notificação com a paragem
+                //Intent intent = new Intent(this, NovaNotificacaoActivity.class);
+                //intent.putExtra(ParagemActivity.KEY_PARAGEM_INTENT, 1);
+                //startActivity(intent);
                 return true;
             case R.id.adicionar_favoritos:
-                GestorFavoritos.getInstance().addParagem(this.paragem);
+                boolean foiIntroduzido = GestorFavoritos.getInstance().addParagem(this.paragem);
+                if(foiIntroduzido){
+                    Toast.makeText(this, "A paragem foi adicionada aos favoritos.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Não foi possível adicionar aos favoritos.", Toast.LENGTH_SHORT).show();
+                }
+
+                return true;
+            case R.id.remover_favoritos:
+                boolean foiRemovido = GestorFavoritos.getInstance().removeParagem(this.paragem);
+                if(foiRemovido){
+                    Toast.makeText(this, "A paragem foi removida dos favoritos.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Não foi possível remover dos favoritos.", Toast.LENGTH_SHORT).show();
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
