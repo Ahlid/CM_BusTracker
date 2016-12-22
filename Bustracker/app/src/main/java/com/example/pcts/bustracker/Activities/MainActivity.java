@@ -37,10 +37,11 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
    super.onCreate(savedInstanceState);
+
+
         GestorInformacao.getInstance();
         GestorFavoritos.getInstance(this);
         GestorNotificacao.getInstance(this);
-
 
         setContentView(R.layout.activity_main);
 
