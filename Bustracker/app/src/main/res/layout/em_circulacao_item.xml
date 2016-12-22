@@ -30,7 +30,7 @@
             android:id="@+id/tempo_desde_partida" />
     </LinearLayout>
 
-    <ImageView
+    <com.example.pcts.bustracker.CustomComponents.ImageViewCheckable
         android:id="@+id/wheelchair_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -39,8 +39,8 @@
         android:layout_centerVertical = "true"
         android:src="@drawable/ic_bicycle" />
 
-    <ImageView
-        android:id="@+id/bicicle_image"
+    <com.example.pcts.bustracker.CustomComponents.ImageViewCheckable
+        android:id="@+id/bicycle_image"
         android:layout_marginRight="20dp"
         android:layout_width="48dp"
         android:layout_height="48dp"

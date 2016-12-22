@@ -8,8 +8,10 @@ import com.example.pcts.bustracker.Model.Viagem;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Created by pcts on 11/24/2016.
@@ -179,37 +181,32 @@ public class GestorInformacao  {
         return null;
     }
 
-    public List<Viagem> getProximasPartidas(Carreira c){
+    public List<Viagem> getProximasPartidas(Carreira carreira){
 
+        List<Viagem> viagensOrdenadas = ordenarViagensPorData(new ArrayList<>(this.viagens));
+        List<Viagem> resultadoViagens = new ArrayList<>();
 
-        List<Viagem> aux = new ArrayList<>();
+        for (Viagem viagem : viagensOrdenadas){
+            if(viagem.getCarreira().getId() == carreira.getId() && isTimeAfter(viagem.getDataPartida())){
+                resultadoViagens.add(viagem);
 
-        for (Viagem v : this.viagens){
-            if(isTimeAfter(v.getDataPartida()) && v.getCarreira().getId() == c.getId()){
-                aux.add(v);
-
-                if(aux.size() > 4)
-                        break;
+                if(resultadoViagens.size() > 4)
+                    break;
 
             }
-
         }
 
-
-        //TODO verificar ordem
-
-        return aux;
+        return resultadoViagens;
     }
 
+    private List<Viagem> ordenarViagensPorData(List<Viagem> viagens){
+        Collections.sort(viagens);
+        return viagens;
+    }
 
     private boolean isTimeAfter(Date date){
         Date now = new Date();
-
-        int timeNow = now.getHours()*60*60 + date.getMinutes() *60 + date.getSeconds();
-        int time = date.getHours()*60*60 + date.getMinutes()*60 + date.getSeconds();
-
-        return time > timeNow;
-
+        return date.after(now);
     }
 
 
