@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ver_no_mapa"
+        android:title="Ver no Mapa" />
+    <item
+        android:id="@+id/criar_notificacao"
+        android:title="Adicionar Notificação" />
+
+    <item
+        android:id="@+id/adicionar_favoritos"
+        android:title="Adicionar favoritos" />
+
+</menu>
