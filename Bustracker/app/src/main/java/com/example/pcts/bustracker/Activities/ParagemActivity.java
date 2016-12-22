@@ -94,7 +94,7 @@ public class ParagemActivity extends AppCompatActivity {
             case R.id.remover_favoritos:
                 boolean foiRemovido = GestorFavoritos.getInstance().removeParagem(this.paragem);
                 if(foiRemovido){
-                    Toast.makeText(this, "A paragem foi removida aos favoritos.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "A paragem foi removida dos favoritos.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Não foi possível remover dos favoritos.", Toast.LENGTH_SHORT).show();
                 }

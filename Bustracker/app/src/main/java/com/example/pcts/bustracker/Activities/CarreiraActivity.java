@@ -7,6 +7,7 @@ import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Model.Autocarro;
 import com.example.pcts.bustracker.Model.Carreira;
@@ -46,10 +48,68 @@ public class CarreiraActivity extends AppCompatActivity {
         this.atualizarAutocarrosEmCirculacao();
         this.atualizarProximasPartidas();
 
-
-
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_paragem_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu){
+
+        MenuItem itemAdicionarFavoritos = menu.findItem(R.id.adicionar_favoritos);
+        MenuItem itemRemoverFavoritos = menu.findItem(R.id.remover_favoritos);
+
+        if(GestorFavoritos.getInstance().getCarreiras().contains(this.carreira)){
+
+            itemAdicionarFavoritos.setVisible(false);
+            itemRemoverFavoritos.setVisible(true);
+        } else {
+            itemAdicionarFavoritos.setVisible(true);
+            itemRemoverFavoritos.setVisible(false);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.ver_no_mapa:
+                //TODO - Chamar a atividade ou ir para o fragmento
+                return true;
+            case R.id.criar_notificacao:
+                //Intent intent = new Intent(this, NovaNotificacaoActivity.class);
+                //intent.putExtra(ParagemActivity.KEY_CARREIRA_INTENT, 1);
+                //startActivity(intent);
+                return true;
+            case R.id.adicionar_favoritos:
+                boolean foiIntroduzido = GestorFavoritos.getInstance().addCarreira(this.carreira);
+                if(foiIntroduzido){
+                    Toast.makeText(this, "A carreira foi adicionada aos favoritos.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Não foi possível adicionar aos favoritos.", Toast.LENGTH_SHORT).show();
+                }
+
+                return true;
+            case R.id.remover_favoritos:
+                boolean foiRemovido = GestorFavoritos.getInstance().removeCarreira(this.carreira);
+                if(foiRemovido){
+                    Toast.makeText(this, "A carreira foi removida dos favoritos.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Não foi possível remover dos favoritos.", Toast.LENGTH_SHORT).show();
+                }
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
     private void atualizarAutocarrosEmCirculacao() {
