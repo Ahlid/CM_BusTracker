@@ -19,4 +19,9 @@
         android:title="Ver Horário"
         />
 
+    <item
+        android:id="@+id/ver_trajeto"
+        android:title="Ver Trajeto"
+        />
+
 </menu>

@@ -44,7 +44,7 @@ import java.util.List;
  * Created by pcts on 11/23/2016.
  */
 
-public class MainFragment extends Fragment implements ViagemObserver{
+public class MainFragment extends Fragment implements ViagemObserver {
 
     private ClusterManager<MyItem> mClusterManager;
     private GoogleMap mMap;
@@ -63,7 +63,7 @@ public class MainFragment extends Fragment implements ViagemObserver{
 
         List<Viagem> viagems = GestorInformacao.getInstance().getViagens();
 
-        for(Viagem viagem: viagems){
+        for (Viagem viagem : viagems) {
             viagem.addObserver(this);
         }
 
@@ -87,114 +87,13 @@ public class MainFragment extends Fragment implements ViagemObserver{
 
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         List<Viagem> viagems = GestorInformacao.getInstance().getViagens();
 
-        for(Viagem viagem: viagems){
+        for (Viagem viagem : viagems) {
             viagem.removeObserver(this);
         }
-
-    }
-    private String getUrl(LatLng origin, LatLng dest) {
-
-        // Origin of route
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-
-        // Destination of route
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-
-
-        // Sensor enabled
-        String sensor = "sensor=false";
-
-        // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + sensor;
-
-        // Output format
-        String output = "json";
-
-        // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
-
-
-        return url;
-    }
-
-    private void setUpClusterer(GoogleMap map) {
-        // Declare a variable for the cluster manager.
-
-
-        // Initialize the manager with the context and the map.
-        // (Activity extends context, so we can pass 'this' in the constructor.)
-        mClusterManager = new ClusterManager<MyItem>(getContext(), map);
-       OwnIconRendered i = new OwnIconRendered(getContext(),map,mClusterManager);
-        mClusterManager.setRenderer(i);
-        // Point the map's listeners at the listeners implemented by the cluster
-        // manager.
-        map.setOnCameraChangeListener(mClusterManager);
-        map.setOnMarkerClickListener(mClusterManager);
-
-        // Add cluster items (markers) to the cluster manager.
-        addItems(map);
-
-        drawPath(GestorInformacao.getInstance().getCarreiras().get(0).getParagem(0).getPosicao(),GestorInformacao.getInstance().getCarreiras().get(0).getParagem(1).getPosicao(),map);
-        drawPath(GestorInformacao.getInstance().getCarreiras().get(0).getParagem(1).getPosicao(),GestorInformacao.getInstance().getCarreiras().get(0).getParagem(2).getPosicao(),map);
-        drawPath(GestorInformacao.getInstance().getCarreiras().get(0).getParagem(2).getPosicao(),GestorInformacao.getInstance().getCarreiras().get(0).getParagem(3).getPosicao(),map);
-        drawPath(GestorInformacao.getInstance().getCarreiras().get(0).getParagem(3).getPosicao(),GestorInformacao.getInstance().getCarreiras().get(0).getParagem(4).getPosicao(),map);
-    }
-
-
-    private void drawPath(LatLng origin,LatLng dest, GoogleMap map){
-
-
-        // Getting URL to the Google Directions API
-        String url = getUrl(origin, dest);
-        Log.d("onMapClick", url.toString());
-        FetchUrl FetchUrl = new FetchUrl(map);
-
-        // Start downloading json data from Google Directions API
-        //FetchUrl.execute(url);
-        //move map camera
-        map.moveCamera(CameraUpdateFactory.newLatLng(origin));
-        map.animateCamera(CameraUpdateFactory.zoomTo(11));
-    }
-
-    private void addItems(final GoogleMap map) {
-
-        ArrayList<LatLng> points;
-        PolylineOptions lineOptions = null;
-        points = new ArrayList<>();
-        lineOptions = new PolylineOptions();
-
-
-        List<Paragem> paragens = GestorInformacao.getInstance().getParagems();
-
-        for(Paragem p : paragens){
-
-
-            MyItem offsetItem = new MyItem(p);
-            mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
-                @Override
-                public boolean onClusterItemClick(MyItem myItem) {
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Scan result");
-                    builder.setMessage(myItem.getParagem().toString()+"\n"+GestorInformacao.getInstance().obterProximasPassagens(myItem.getParagem())) ;
-                    //TODO: ver detalhes, adicionar favoritos
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-                    return false;
-                }
-            });
-            points.add(p.getPosicao());
-            //mClusterManager.addItem(offsetItem);
-        }
-
-         /*   lineOptions.addAll(points);
-          lineOptions.width(10);
-          lineOptions.color(Color.BLUE);*/
-        map.addPolyline(lineOptions);
 
     }
 
@@ -207,13 +106,12 @@ public class MainFragment extends Fragment implements ViagemObserver{
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
 
-
         List<Viagem> viagems = GestorInformacao.getInstance().getViagens();
 
-        for(Viagem viagem : viagems){
+        for (Viagem viagem : viagems) {
 
-            if(viagem.getTrajeto().size() >0) {
-                LatLng posicao = viagem.getTrajeto().get(viagem.getTrajeto().size()-1);
+            if (viagem.getTrajeto().size() > 0) {
+                LatLng posicao = viagem.getTrajeto().get(viagem.getTrajeto().size() - 1);
                 CameraPosition cameraPosition = new CameraPosition.Builder().
                         target(posicao).
                         //tilt(60).
@@ -221,10 +119,10 @@ public class MainFragment extends Fragment implements ViagemObserver{
 
                                 build();
 
-               // mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                // mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.ic_tracker);
-                Bitmap b=bitmapdraw.getBitmap();
+                BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_tracker);
+                Bitmap b = bitmapdraw.getBitmap();
 
                 b = get_Resized_Bitmap(b, 250, 250);
 
@@ -247,7 +145,6 @@ public class MainFragment extends Fragment implements ViagemObserver{
     }
 
 
-
     private void addCircleToMap(LatLng pos, GoogleMap mapView) {
 
         // circle settings
@@ -261,7 +158,7 @@ public class MainFragment extends Fragment implements ViagemObserver{
         Canvas c = new Canvas(bm);
         Paint p = new Paint();
         p.setColor(getResources().getColor(R.color.colorPrimary));
-        c.drawCircle(d/2, d/2, d/2, p);
+        c.drawCircle(d / 2, d / 2, d / 2, p);
 
         // generate BitmapDescriptor from circle Bitmap
         BitmapDescriptor bmD = BitmapDescriptorFactory.fromBitmap(bm);
@@ -269,7 +166,7 @@ public class MainFragment extends Fragment implements ViagemObserver{
 // mapView is the GoogleMap
         mapView.addGroundOverlay(new GroundOverlayOptions().
                 image(bmD).
-                position(pos,radiusM*2,radiusM*2));
+                position(pos, radiusM * 2, radiusM * 2));
     }
 
     public Bitmap get_Resized_Bitmap(Bitmap bmp, int newHeight, int newWidth) {
@@ -284,7 +181,7 @@ public class MainFragment extends Fragment implements ViagemObserver{
 
         // "RECconREATE" THE NEW BITMAP
         Bitmap newBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height, matrix, false);
-        return newBitmap ;
+        return newBitmap;
     }
 
     @Override
@@ -294,7 +191,7 @@ public class MainFragment extends Fragment implements ViagemObserver{
             public void run() {
                 mMap.clear();
 
-               configuremap();
+                configuremap();
 
             }
         });

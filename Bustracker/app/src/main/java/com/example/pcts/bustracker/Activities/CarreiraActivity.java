@@ -66,12 +66,12 @@ public class CarreiraActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu (Menu menu){
+    public boolean onPrepareOptionsMenu(Menu menu) {
 
         MenuItem itemAdicionarFavoritos = menu.findItem(R.id.adicionar_favoritos);
         MenuItem itemRemoverFavoritos = menu.findItem(R.id.remover_favoritos);
 
-        if(GestorFavoritos.getInstance().getCarreiras().contains(this.carreira)){
+        if (GestorFavoritos.getInstance().getCarreiras().contains(this.carreira)) {
 
             itemAdicionarFavoritos.setVisible(false);
             itemRemoverFavoritos.setVisible(true);
@@ -120,7 +120,7 @@ public class CarreiraActivity extends AppCompatActivity {
                 return true;
             case R.id.adicionar_favoritos:
                 boolean foiIntroduzido = GestorFavoritos.getInstance().addCarreira(this.carreira);
-                if(foiIntroduzido){
+                if (foiIntroduzido) {
                     Toast.makeText(this, "A carreira foi adicionada aos favoritos.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Não foi possível adicionar aos favoritos.", Toast.LENGTH_SHORT).show();
@@ -129,7 +129,7 @@ public class CarreiraActivity extends AppCompatActivity {
                 return true;
             case R.id.remover_favoritos:
                 boolean foiRemovido = GestorFavoritos.getInstance().removeCarreira(this.carreira);
-                if(foiRemovido){
+                if (foiRemovido) {
                     Toast.makeText(this, "A carreira foi removida dos favoritos.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Não foi possível remover dos favoritos.", Toast.LENGTH_SHORT).show();
@@ -142,6 +142,11 @@ public class CarreiraActivity extends AppCompatActivity {
                 Intent intent4 = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent4);
                 return true;
+            case R.id.ver_trajeto:
+                Intent traj = new Intent(this, TrajetoCarreiraActivity.class);
+                startActivity(traj);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -154,24 +159,24 @@ public class CarreiraActivity extends AppCompatActivity {
         ListView emCirculacaolistView = (ListView) this.findViewById(R.id.em_circulacao);
         List<Map<String, Object>> listaDeItemsEmCirculacao = new ArrayList<>();
 
-        for (Viagem viagem: viagens) {
+        for (Viagem viagem : viagens) {
             //Viagem pertence a esta carreira
-            if (viagem.getCarreira().getId() == this.carreira.getId()){
+            if (viagem.getCarreira().getId() == this.carreira.getId()) {
                 HashMap<String, Object> mapaItem = new HashMap<String, Object>();
                 mapaItem.put("nome_paragem", viagem.getParagemAtual().getNome());
                 mapaItem.put("tempo_desde_partida", "Partiu às " + viagem.getDataPartida().getHours() + ":" + viagem.getDataPartida().getMinutes());
-                mapaItem.put("bicycle_image",viagem.getAutocarro().isTemAcessoBicicleta());
-                mapaItem.put("wheelchair_image",viagem.getAutocarro().isTemAcessoCadeiraDeRodas());
+                mapaItem.put("bicycle_image", viagem.getAutocarro().isTemAcessoBicicleta());
+                mapaItem.put("wheelchair_image", viagem.getAutocarro().isTemAcessoCadeiraDeRodas());
                 listaDeItemsEmCirculacao.add(mapaItem);
             }
         }
 
         ListAdapter adapter = new SimpleAdapter(
                 this.getApplicationContext(), listaDeItemsEmCirculacao,
-                R.layout.em_circulacao_item, new String[] {
+                R.layout.em_circulacao_item, new String[]{
                 "nome_paragem", "tempo_desde_partida"
-                , "bicycle_image" , "wheelchair_image"
-                },
+                , "bicycle_image", "wheelchair_image"
+        },
                 new int[]{
                         R.id.nome_paragem,
                         R.id.tempo_desde_partida,
@@ -185,8 +190,7 @@ public class CarreiraActivity extends AppCompatActivity {
     }
 
 
-
-    private String calcularTempoRestante(Date date){
+    private String calcularTempoRestante(Date date) {
         Date now = new Date();
         long time = date.getTime() - now.getTime();
         Date subtracao = new Date(time);
@@ -204,9 +208,9 @@ public class CarreiraActivity extends AppCompatActivity {
         List<Map<String, String>> listaDeItemsProximasPartidas = new ArrayList<>();
         proximasPartidasView.setEnabled(false);
 
-        for (Viagem viagem: viagens) {
+        for (Viagem viagem : viagens) {
             //Viagem pertence a esta carreira
-            if (viagem.getCarreira().getId() == this.carreira.getId()){
+            if (viagem.getCarreira().getId() == this.carreira.getId()) {
                 HashMap<String, String> mapaItem = new HashMap<String, String>();
                 mapaItem.put("hora", viagem.getDataPartida().getHours() + ":" + viagem.getDataPartida().getMinutes());
                 mapaItem.put("tempo_restante", calcularTempoRestante(viagem.getDataPartida()));
@@ -216,7 +220,7 @@ public class CarreiraActivity extends AppCompatActivity {
 
         ListAdapter adapter = new SimpleAdapter(
                 this.getApplicationContext(), listaDeItemsProximasPartidas,
-                R.layout.proxima_partida_item, new String[] {
+                R.layout.proxima_partida_item, new String[]{
                 "hora", "tempo_restante"},
                 new int[]{
                         R.id.hora,

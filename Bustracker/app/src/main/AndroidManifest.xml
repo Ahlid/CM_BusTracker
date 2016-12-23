@@ -49,6 +49,7 @@
         <activity android:name=".Activities.NovaNotificacaoActivity"></activity>
         <activity android:name=".Activities.ViagemActivity"></activity>
         <activity android:name=".Activities.ParagemNoMapaActivity"></activity>
+        <activity android:name=".Activities.TrajetoCarreiraActivity"></activity>
 
         <service
             android:name=".Service.NotificacaoService"
