@@ -18,7 +18,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.clustering.ClusterManager;
 
@@ -32,9 +34,12 @@ import java.util.List;
 public class MainFragment extends Fragment {
 
     private ClusterManager<MyItem> mClusterManager;
+    private GoogleMap mMap;
+
     public MainFragment() {
         mClusterManager = null;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,14 +52,15 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onMapReady(final GoogleMap map) {
-
+                mMap = map;
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setZoomControlsEnabled(true);
                 // Other supported types include: MAP_TYPE_NORMAL,
                 // MAP_TYPE_TERRAIN, MAP_TYPE_HYBRID and MAP_TYPE_NONE
                 map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-                setUpClusterer(map);
+                //setUpClusterer(map);
+                configuremap();
 
             }
         });
@@ -89,7 +95,7 @@ public class MainFragment extends Fragment {
 
     private void setUpClusterer(GoogleMap map) {
         // Declare a variable for the cluster manager.
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.528244, -8.882786), 15));
+
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
@@ -161,6 +167,26 @@ public class MainFragment extends Fragment {
           lineOptions.width(10);
           lineOptions.color(Color.BLUE);*/
         map.addPolyline(lineOptions);
+
+    }
+
+    private void configuremap() {
+
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.528244, -8.882786), 15));
+
+        List<Paragem> paragens = GestorInformacao.getInstance().getParagems();
+
+        for(Paragem p : paragens){
+            MarkerOptions marker = new MarkerOptions().position(p.getPosicao()).title(p.getNome());
+
+// Changing marker icon
+            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_stop_final));
+
+// adding marker
+           // mMap.addMarker(marker);
+        }
+
 
     }
 

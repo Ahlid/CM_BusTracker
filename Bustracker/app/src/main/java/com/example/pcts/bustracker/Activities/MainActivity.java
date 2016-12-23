@@ -22,9 +22,16 @@ import com.example.pcts.bustracker.Fragments.QRcodeFragment;
 import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Managers.GestorNotificacao;
+import com.example.pcts.bustracker.Model.Paragem;
+import com.example.pcts.bustracker.Model.Viagem;
 import com.example.pcts.bustracker.R;
 import com.example.pcts.bustracker.Service.NotificacaoService;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.zxing.Result;
+
+import java.util.HashMap;
+import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -34,12 +41,14 @@ public class MainActivity extends FragmentActivity
     private NavigationView navigationView = null;
     private Toolbar toolbar = null;
     private ZXingScannerView mScanerView;
+    private HashMap<Viagem,MarkerOptions> hashViagem;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
    super.onCreate(savedInstanceState);
 
+        hashViagem = new HashMap<>();
 
         GestorInformacao.getInstance();
         GestorFavoritos.getInstance(this);
@@ -74,7 +83,11 @@ public class MainActivity extends FragmentActivity
 
 
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
+
+
 
     @Override
     public void onBackPressed() {

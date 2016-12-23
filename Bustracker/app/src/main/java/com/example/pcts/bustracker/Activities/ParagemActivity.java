@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -27,6 +28,7 @@ import com.example.pcts.bustracker.Model.ViagemObserver;
 import com.example.pcts.bustracker.R;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,8 +80,22 @@ public class ParagemActivity extends AppCompatActivity implements ViagemObserver
             itemAdicionarFavoritos.setVisible(true);
             itemRemoverFavoritos.setVisible(false);
         }
-
+        makeActionOverflowMenuShown();
         return true;
+    }
+
+    private void makeActionOverflowMenuShown() {
+        //devices with hardware menu button (e.g. Samsung Note) don't show action overflow menu
+        try {
+            ViewConfiguration config = ViewConfiguration.get(this);
+            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+            if (menuKeyField != null) {
+                menuKeyField.setAccessible(true);
+                menuKeyField.setBoolean(config, false);
+            }
+        } catch (Exception e) {
+            Log.d("D", e.getLocalizedMessage());
+        }
     }
 
     @Override
@@ -87,7 +103,9 @@ public class ParagemActivity extends AppCompatActivity implements ViagemObserver
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.ver_no_mapa:
-                //TODO - Chamar a atividade ou ir para o fragmento
+                Intent intent = new Intent(this, ParagemNoMapaActivity.class);
+                intent.putExtra(ParagemNoMapaActivity.KEY_PARAGEM, this.paragem.getId());
+                startActivity(intent);
                 return true;
 
             case R.id.adicionar_favoritos:

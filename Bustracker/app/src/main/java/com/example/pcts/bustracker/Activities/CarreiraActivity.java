@@ -5,10 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
@@ -25,6 +27,7 @@ import com.example.pcts.bustracker.Model.Notificacao;
 import com.example.pcts.bustracker.Model.Viagem;
 import com.example.pcts.bustracker.R;
 
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -76,7 +79,23 @@ public class CarreiraActivity extends AppCompatActivity {
             itemRemoverFavoritos.setVisible(false);
         }
 
+
+        makeActionOverflowMenuShown();
         return true;
+    }
+
+    private void makeActionOverflowMenuShown() {
+        //devices with hardware menu button (e.g. Samsung Note) don't show action overflow menu
+        try {
+            ViewConfiguration config = ViewConfiguration.get(this);
+            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+            if (menuKeyField != null) {
+                menuKeyField.setAccessible(true);
+                menuKeyField.setBoolean(config, false);
+            }
+        } catch (Exception e) {
+            Log.d("D", e.getLocalizedMessage());
+        }
     }
 
     @Override
@@ -84,8 +103,11 @@ public class CarreiraActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.ver_no_mapa:
-                //TODO - Chamar a atividade ou ir para o fragmento
+                Intent intentm = new Intent(this, ViagemActivity.class);
+                startActivity(intentm);
                 return true;
+
+
             case R.id.criar_notificacao:
                 Intent intent = new Intent(this, NovaNotificacaoActivity.class);
 
@@ -154,6 +176,8 @@ public class CarreiraActivity extends AppCompatActivity {
         emCirculacaolistView.setAdapter(adapter);
 
     }
+
+
 
     private String calcularTempoRestante(Date date){
         Date now = new Date();

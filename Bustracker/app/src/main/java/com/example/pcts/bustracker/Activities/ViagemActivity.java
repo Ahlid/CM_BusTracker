@@ -102,11 +102,11 @@ public class ViagemActivity extends FragmentActivity implements OnMapReadyCallba
         for(Paragem p : paragems){
             MarkerOptions marker = new MarkerOptions().position(p.getPosicao()).title("Hello Maps");
 
-// Changing marker icon
-            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_stop));
+        // Changing marker icon
+           // marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_stop));
 
-// adding marker
-            mMap.addMarker(marker);
+        // adding marker
+        //    mMap.addMarker(marker);
 
         }
 
@@ -147,15 +147,15 @@ public class ViagemActivity extends FragmentActivity implements OnMapReadyCallba
 
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                    BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.ic_action_name);
+                    BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.ic_tracker);
                     Bitmap b=bitmapdraw.getBitmap();
 
                     b = get_Resized_Bitmap(b, 250, 250);
 
                     final MarkerOptions actual = new MarkerOptions()
                             .position(posicao)
-                            .title(viagem.getCarreira().getNome())
-                            .icon(BitmapDescriptorFactory.fromBitmap(b));
+                            .title(viagem.getCarreira().getNome());
+                            //.icon(BitmapDescriptorFactory.fromBitmap(b));
 
 
                     mMap.addMarker(actual);
@@ -173,7 +173,7 @@ public class ViagemActivity extends FragmentActivity implements OnMapReadyCallba
                     marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_stop));
 
 // adding marker
-                    mMap.addMarker(marker);
+                    //mMap.addMarker(marker);
 
                 }
 

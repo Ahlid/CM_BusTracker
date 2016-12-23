@@ -1,98 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:minHeight="120dp"
-    android:layout_height="120dp">
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linear_notificacao">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="45dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/ic_front_bus"
-                android:layout_marginTop="40dp"
-                android:layout_alignParentTop="true"
                 android:id="@+id/imageView5"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal"/>
 
             <TextView
                 android:text="TextView"
-                android:layout_width="60dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/notificacao_carreira"
-                android:layout_marginTop="70dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
-                android:ellipsize="end"
-                android:maxLength="10"
+                android:layout_weight="1"
                 android:textAlignment="center" />
+        </LinearLayout>
 
-
-
-
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-
-                android:layout_marginLeft="135dp"
-                android:layout_marginTop="40dp"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/ic_bus_stop"/>
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_bus_stop"
+                android:layout_gravity="center_horizontal"/>
 
             <TextView
                 android:text="TextView"
-                android:layout_width="60dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/notificacao_paragem"
-                android:layout_marginTop="70dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="120dp"
+                android:layout_weight="1"
                 android:textAlignment="center" />
+        </LinearLayout>
 
-
-
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/ic_timer_black_24dp"
-
-                android:layout_marginLeft="215dp"
-                android:layout_marginTop="40dp"
-                android:layout_alignParentTop="true"
-                />
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal"/>
 
             <TextView
                 android:text="TextView"
-                android:layout_width="60dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/notificacao_tempo"
-                android:layout_marginTop="70dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="205dp"
+                android:layout_weight="1"
                 android:textAlignment="center" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-
-    <ImageView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_action_name"
                 android:id="@+id/notificacao_apagar"
-                android:layout_alignParentEnd="true"/>
+                android:layout_weight="1"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="right"/>
 
-    <ToggleButton
-        android:text="ToggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="40dp"
-        android:layout_alignParentTop="true"
-        android:id="@+id/switch_notificacao" />
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch_notificacao"
+                android:layout_weight="1"
+                android:checked="true"
+                android:thumb="@drawable/thumb"
+                android:track="@drawable/track"
+                android:thumbTextPadding="5dp"
+                android:switchMinWidth="40dp"
+                android:textOn="On"
+                android:textOff="Off"
+                />
 
 
 
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
