@@ -5,6 +5,8 @@ import android.database.Cursor;
 
 import com.example.pcts.bustracker.Database.DatabaseFavoritos;
 import com.example.pcts.bustracker.Model.Carreira;
+import com.example.pcts.bustracker.Model.Notificacao;
+import com.example.pcts.bustracker.Model.FavoritosObserver;
 import com.example.pcts.bustracker.Model.Paragem;
 
 import java.util.ArrayList;
@@ -16,7 +18,6 @@ import java.util.List;
 
 public class GestorFavoritos {
 
-
     private static GestorFavoritos instance;
     private List<Carreira> carreiras;
     private List<Paragem> paragens;
@@ -27,13 +28,15 @@ public class GestorFavoritos {
     private static final String COL_2 = "TIPO";
     private static final String COL_3 = "ID_FAV";
 
+    private List<FavoritosObserver> observers;
+
     private GestorFavoritos(Context context){
 
         db = new DatabaseFavoritos(context);
         carreiras = new ArrayList<>();
         paragens = new ArrayList<>();
 
-
+        this.observers = new ArrayList<>();
        Cursor c = db.getAllData();
         while(c.moveToNext()) {
 
@@ -53,6 +56,13 @@ public class GestorFavoritos {
         return instance;
     }
 
+    public void addObserver(FavoritosObserver g) {
+        this.observers.add(g);
+    }
+
+    public void removeObserver(FavoritosObserver g) {
+        this.observers.remove(g);
+    }
 
     public static GestorFavoritos getInstance(Context context){
         if(instance == null){
@@ -84,6 +94,10 @@ public class GestorFavoritos {
 
         if(res){
             this.db.insertData(c.getId(),this.TIPO_CARREIRA);
+            for (FavoritosObserver observer:
+                    this.observers) {
+                observer.onChangeCarreiras();
+            }
         }
 
         return res;
@@ -96,6 +110,11 @@ public class GestorFavoritos {
 
         if(res){
             this.db.insertData(p.getId(),this.TIPO_PARAGEM);
+            for (FavoritosObserver observer:
+                    this.observers) {
+                observer.onChangeParagens();
+            }
+
         }
 
 
@@ -107,6 +126,11 @@ public class GestorFavoritos {
 
         if(res){
             this.db.deleteData(Integer.toString(c.getId()),this.TIPO_CARREIRA);
+            for (FavoritosObserver observer:
+                    this.observers) {
+                observer.onChangeCarreiras();
+            }
+
         }
 
         return  res;
@@ -117,7 +141,13 @@ public class GestorFavoritos {
 
         if(res){
             this.db.deleteData(Integer.toString(p.getId()),this.TIPO_PARAGEM);
+            for (FavoritosObserver observer:
+                    this.observers) {
+                observer.onChangeParagens();
+            }
         }
+
+
 
         return  res;
     }
@@ -130,4 +160,6 @@ public class GestorFavoritos {
                 ", carreiras=" + carreiras +
                 '}';
     }
+
+
 }

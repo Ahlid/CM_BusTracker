@@ -18,6 +18,7 @@ import com.example.pcts.bustracker.Lists.FavoritesAdapterParagem;
 import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Model.Carreira;
+import com.example.pcts.bustracker.Model.FavoritosObserver;
 import com.example.pcts.bustracker.Model.Paragem;
 import com.example.pcts.bustracker.R;
 
@@ -28,20 +29,16 @@ import java.util.List;
  */
 
 public class FavoritesFragment extends Fragment {
-View rootView;
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         this.rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
+        this.rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
         ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("Favoritos");
-
-
 
         TabHost host = (TabHost) rootView.findViewById( R.id.tab_favoritos);
         host.setup();
-
-        //TODO: resolver problema das tabs em tablets
 
         //Tab 1
         TabHost.TabSpec spec = host.newTabSpec("Carreiras");
@@ -56,73 +53,24 @@ View rootView;
         host.addTab(spec);
 
 
-
-
-        Button b = (Button) rootView.findViewById(R.id.button);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Scan result");
-                builder.setMessage(GestorFavoritos.getInstance(getContext()).toString()) ;
-                AlertDialog alertDialog = builder.create();
-//                alertDialog.show();
-
-                actualizarListaCarreiras();
-                actualizarListaParagens();
-
-                Intent intent = new Intent(getContext(), ViagemActivity.class);
-                getContext().startActivity(intent);
-
-            }
-        });
-
-        Button b2 = (Button) rootView.findViewById(R.id.button2);
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                List<Paragem> paragens = GestorInformacao.getInstance().getParagems();
-                List<Carreira> carreiras = GestorInformacao.getInstance().getCarreiras();
-
-                for (Paragem p: paragens) {
-                    GestorFavoritos.getInstance().addParagem(p);
-                }
-
-                for (Carreira c: carreiras) {
-                    GestorFavoritos.getInstance().addCarreira(c);
-                }
-
-
-            }
-        });
-
-        Button b3 = (Button) rootView.findViewById(R.id.button3);
-        b3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                List<Paragem> paragens = GestorInformacao.getInstance().getParagems();
-                List<Carreira> carreiras = GestorInformacao.getInstance().getCarreiras();
-
-                for (Paragem p: paragens) {
-                    GestorFavoritos.getInstance().removeParagem(p);
-                }
-
-                for (Carreira c: carreiras) {
-                    GestorFavoritos.getInstance().removeCarreira(c);
-                }
-
-
-            }
-        });
-
-
-
-        actualizarListaCarreiras();
         actualizarListaParagens();
+        actualizarListaCarreiras();
+
+        FavoritosObserver observer = new FavoritosObserver() {
+            @Override
+            public void onChangeParagens() {
+                actualizarListaParagens();
+            }
+
+            @Override
+            public void onChangeCarreiras() {
+                actualizarListaCarreiras();
+            }
+        };
+
+        GestorFavoritos.getInstance().addObserver(observer);
+
+
         // Inflate the layout for this fragment
         return rootView;
     }
@@ -130,13 +78,11 @@ View rootView;
 
 
     private void actualizarListaCarreiras(){
-
         ListView listViewFavoritos = (ListView) this.rootView.findViewById(R.id.list_view_favoritos_carreiras);
         List<Carreira> carreiras = GestorFavoritos.getInstance().getCarreiras();
 
         FavoritesAdapterCarreira adapter = new FavoritesAdapterCarreira(rootView.getContext(), carreiras);
         listViewFavoritos.setAdapter(adapter);
-
     }
 
     private void actualizarListaParagens(){

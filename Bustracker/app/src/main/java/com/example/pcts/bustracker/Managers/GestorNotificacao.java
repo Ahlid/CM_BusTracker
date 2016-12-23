@@ -1,10 +1,7 @@
 package com.example.pcts.bustracker.Managers;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,9 +9,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.pcts.bustracker.Activities.GestorObserver;
 import com.example.pcts.bustracker.Database.DatabaseNotificacoes;
-import com.example.pcts.bustracker.Lists.NotificacaoAdapter;
 import com.example.pcts.bustracker.Model.Carreira;
 import com.example.pcts.bustracker.Model.Notificacao;
 import com.example.pcts.bustracker.Model.Paragem;
@@ -24,9 +19,7 @@ import com.example.pcts.bustracker.R;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Observable;
 
 /**
  * Created by pcts on 11/29/2016.

@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.pcts.bustracker.Activities.CarreiraActivity;
 
+import com.example.pcts.bustracker.Activities.NovaNotificacaoActivity;
 import com.example.pcts.bustracker.Activities.ParagemActivity;
 import com.example.pcts.bustracker.Lists.FavoritesAdapterCarreira;
 import com.example.pcts.bustracker.Lists.NotificacaoAdapter;
@@ -42,7 +44,18 @@ View rootView;
          rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
         ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("Notificações");
 
+
         actualizarListaCarreiras();
+
+        Button novaNotificacaoButton = (Button) rootView.findViewById(R.id.nova_notificacao);
+        novaNotificacaoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), NovaNotificacaoActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Inflate the layout for this fragment
         return rootView;
     }

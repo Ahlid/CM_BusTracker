@@ -2,7 +2,6 @@ package com.example.pcts.bustracker.Lists;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,17 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.example.pcts.bustracker.Activities.GestorObserver;
+import com.example.pcts.bustracker.Managers.GestorObserver;
 import com.example.pcts.bustracker.Activities.NovaNotificacaoActivity;
-import com.example.pcts.bustracker.Activities.ParagemActivity;
-import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorNotificacao;
 import com.example.pcts.bustracker.Model.Notificacao;
 import com.example.pcts.bustracker.R;
 
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by pcts on 12/22/2016.
