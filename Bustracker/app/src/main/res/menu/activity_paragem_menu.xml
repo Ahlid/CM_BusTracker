@@ -3,9 +3,6 @@
     <item
         android:id="@+id/ver_no_mapa"
         android:title="Ver no Mapa" />
-    <item
-        android:id="@+id/criar_notificacao"
-        android:title="Adicionar Notificação" />
 
     <item
         android:id="@+id/adicionar_favoritos"

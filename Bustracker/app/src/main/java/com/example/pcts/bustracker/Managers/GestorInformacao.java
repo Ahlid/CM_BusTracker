@@ -61,7 +61,6 @@ public class GestorInformacao  {
         carreiras.add(c);
 
         //viagens
-
         Viagem v1 = new Viagem(1,a1,c,new Date(2016,11,26,17,10,10),TipoViagem.IDA);
         Viagem v2 = new Viagem(2,a1,c,new Date(2016,11,26,17,10,10),TipoViagem.VOLTA);
 

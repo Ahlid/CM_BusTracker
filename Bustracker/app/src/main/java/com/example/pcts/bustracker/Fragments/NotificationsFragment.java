@@ -48,7 +48,7 @@ View rootView;
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ParagemActivity.class);
-                intent.putExtra(ParagemActivity.KEY_PARAGEM_INTENT, 1);
+                intent.putExtra(ParagemActivity.KEY_PARAGEM_INTENT, 2);
                 startActivity(intent);
             }
         });
@@ -72,7 +72,6 @@ View rootView;
 
 
     private void actualizarListaCarreiras(){
-
 
         if(GestorNotificacao.getInstance().getNotificacoes().size() == 0) {
             for (Paragem p: GestorInformacao.getInstance().getParagems()) {
