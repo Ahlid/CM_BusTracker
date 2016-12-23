@@ -1,6 +1,7 @@
 package com.example.pcts.bustracker.Activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -134,6 +135,12 @@ public class CarreiraActivity extends AppCompatActivity {
                     Toast.makeText(this, "Não foi possível remover dos favoritos.", Toast.LENGTH_SHORT).show();
                 }
 
+                return true;
+
+            case R.id.ver_horario:
+                Uri uri = Uri.parse("http://www.tsuldotejo.pt/ver_horario.php?fx=781_Ida_20160916_20301231_lineScheds.svg.png");
+                Intent intent4 = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent4);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

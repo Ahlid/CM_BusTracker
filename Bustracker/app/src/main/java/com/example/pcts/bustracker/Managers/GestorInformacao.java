@@ -62,13 +62,13 @@ public class GestorInformacao  {
 
         //viagens
         Viagem v1 = new Viagem(1,a1,c,new Date(2016,11,26,17,10,10),TipoViagem.IDA);
-       // Viagem v2 = new Viagem(2,a1,c,new Date(2016,11,26,17,10,10),TipoViagem.VOLTA);
+        Viagem v2 = new Viagem(2,a1,c,new Date(2016,11,26,17,10,20),TipoViagem.IDA);
 
-        Viagem v3 = new Viagem(3,a2,c,new Date(2016,11,26,10,40,10),TipoViagem.IDA);
-       // Viagem v4 = new Viagem(4,a2,c,new Date(2016,11,26,11,40,10),TipoViagem.VOLTA);
+        Viagem v3 = new Viagem(3,a2,c,new Date(2016,11,26,10,40,30),TipoViagem.IDA);
+        Viagem v4 = new Viagem(4,a2,c,new Date(2016,11,26,11,40,40),TipoViagem.IDA);
 
-        Viagem v5 = new Viagem(5,a3,c,new Date(2016,11,26,11,10,10),TipoViagem.IDA);
-       // Viagem v6 = new Viagem(6,a3,c,new Date(2016,11,26,12,10,10),TipoViagem.VOLTA);
+        Viagem v5 = new Viagem(5,a3,c,new Date(2016,11,26,11,10,50),TipoViagem.IDA);
+        Viagem v6 = new Viagem(6,a3,c,new Date(2016,11,26,12,10,00),TipoViagem.IDA);
 
         addViagens(v1,v3,v5);
 

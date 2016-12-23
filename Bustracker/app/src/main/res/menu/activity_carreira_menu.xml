@@ -14,5 +14,9 @@
     <item
         android:id="@+id/remover_favoritos"
         android:title="Remover dos Favoritos" />
+    <item
+        android:id="@+id/ver_horario"
+        android:title="Ver Horário"
+        />
 
 </menu>
