@@ -236,13 +236,16 @@ public class MainFragment extends Fragment implements ViagemObserver {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                mMap.clear();
 
-                try {
-                    configuremap();
-                }catch (Exception r){
+                if(mMap != null) {
+                    mMap.clear();
+
+                    try {
+                        configuremap();
+                    } catch (Exception r) {
 
 
+                    }
                 }
 
 
