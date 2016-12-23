@@ -53,6 +53,7 @@ public class MainFragment extends Fragment implements ViagemObserver {
 
     private ClusterManager<MyItem> mClusterManager;
     private GoogleMap mMap;
+    private int vezes =0;
 
     public MainFragment() {
         mClusterManager = null;
@@ -233,24 +234,27 @@ public class MainFragment extends Fragment implements ViagemObserver {
 
     @Override
     public void onChangePosition(Viagem v) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
+        if(++vezes == 10) {
+            vezes=0;
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
 
-                if(mMap != null) {
-                    mMap.clear();
+                    if (mMap != null) {
+                        mMap.clear();
 
-                    try {
-                        configuremap();
-                    } catch (Exception r) {
+                        try {
+                            configuremap();
+                        } catch (Exception r) {
 
 
+                        }
                     }
+
+
                 }
-
-
-            }
-        });
+            });
+        }
     }
 
     public static Bitmap castToBitMap(Drawable vectorDrawable){
