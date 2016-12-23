@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.Fragment;
 
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Model.Paragem;
@@ -32,6 +31,8 @@ public class ParagemNoMapaActivity extends FragmentActivity implements OnMapRead
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         int idParagem = getIntent().getIntExtra(KEY_PARAGEM, -1);
         this.paragem = GestorInformacao.getInstance().findParagemById(idParagem);
         setContentView(R.layout.activity_paragem_mapq);
