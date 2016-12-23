@@ -33,7 +33,7 @@
                 android:text="TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/notificacao_paragem"
+                android:id="@+id/notificacao_carreira"
                 android:layout_weight="1"
                 android:textAlignment="center" />
         </LinearLayout>
@@ -55,7 +55,7 @@
                 android:text="TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/notificacao_carreira"
+                android:id="@+id/notificacao_paragem"
                 android:layout_weight="1"
                 android:textAlignment="center" />
         </LinearLayout>

@@ -157,8 +157,7 @@ public class GestorNotificacao implements ViagemObserver {
         float distancia = v.getTrajeto().size() > 0 ? Viagem.calcularDistancia(v.getTrajeto().get(v.getTrajeto().size()-1), p.getPosicao()) : 9999999;
 
 
-        showToast("Ja tem o "+p.getNome()+"? R: "+v.contemPonto(p.getPosicao()));
-        Log.d("Notificacao", "Ja tem o "+p.getNome()+"? R: "+v.contemPonto(p.getPosicao()) +"Distancia: "+distancia );
+       Log.d("Notificacao", "Ja tem o "+p.getNome()+"? R: "+v.contemPonto(p.getPosicao()) +"Distancia: "+distancia );
 
 
         if(v.getTrajeto().size() > 1){

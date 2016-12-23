@@ -1,6 +1,9 @@
 package com.example.pcts.bustracker.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,14 +23,16 @@ import com.example.pcts.bustracker.Model.Carreira;
 import com.example.pcts.bustracker.Model.Notificacao;
 import com.example.pcts.bustracker.Model.Paragem;
 import com.example.pcts.bustracker.Model.Viagem;
+import com.example.pcts.bustracker.Model.ViagemObserver;
 import com.example.pcts.bustracker.R;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ParagemActivity extends AppCompatActivity {
+public class ParagemActivity extends AppCompatActivity implements ViagemObserver {
 
     public final static String KEY_PARAGEM_INTENT = "Paragem";
 
@@ -43,6 +48,12 @@ public class ParagemActivity extends AppCompatActivity {
         this.paragem = GestorInformacao.getInstance().findParagemById(idParagem);
         this.getSupportActionBar().setTitle("Paragem " + this.paragem.getNome());
         this.atualizarListaProximaPassagens();
+
+        List<Viagem> viagems = GestorInformacao.getInstance().getViagens();
+        for(Viagem v : viagems){
+            v.addObserver(this);
+        }
+
     }
 
     @Override
@@ -114,13 +125,29 @@ public class ParagemActivity extends AppCompatActivity {
         }
 
         for (Viagem viagem : viagens) {
-            HashMap<String, String> mapaItem = new HashMap<String, String>();
+            if (!viagem.contemPonto(this.paragem.getPosicao())){
+                HashMap<String, String> mapaItem = new HashMap();
             mapaItem.put("nome_carreira", viagem.getCarreira().getNome());
 
-            //TODO Calcular o tempo que falta para a chegada da carreira à paragem
-            mapaItem.put("tempo_restante", ""); //Vazio propositadamente
+            if (viagem.getTrajeto().size() == 0) {
+                mapaItem.put("tempo_restante", "Ainda não partiu"); //Vazio propositadamente
+            } else {
+                if (!viagem.contemPonto(paragem.getPosicao())) {
+                    int minutos = Viagem.converterParaMinutos(Viagem.calcularTempo(Viagem.calcularDistancia(viagem.getTrajeto().get(viagem.getTrajeto().size() - 1), paragem.getPosicao())));
+                    if(minutos >= 1){
+                        mapaItem.put("tempo_restante", "" + minutos + " Minutos"); //Vazio propositadamente
+                    }else {
+                        mapaItem.put("tempo_restante", "Menos de 1 Minuto"); //Vazio propositadamente
+                    }
+                    //TODO Calcular o tempo que falta para a chegada da carreira à paragem
 
+                } else {
+                    mapaItem.put("tempo_restante", "Já passou"); //Vazio propositadamente
+
+                }
+            }
             listaDeItems.add(mapaItem);
+        }
         }
 
         ListAdapter adapter = new SimpleAdapter(
@@ -138,4 +165,13 @@ public class ParagemActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onChangePosition(Viagem v) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                atualizarListaProximaPassagens();
+            }
+        });
+    }
 }

@@ -6,6 +6,7 @@ import com.example.pcts.bustracker.Model.Viagem;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by pcts on 12/22/2016.
@@ -27,6 +28,15 @@ public class Simulador extends Thread {
         int i = 0;
         while (true) {
 
+
+            if(i == 0){
+
+                try {
+                    Thread.sleep(Math.max((viagem.getDataPartida().getMinutes() - (new Date()).getSeconds())*1000,400));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 
             if(i+1 < path.size()){
                 sleep = Viagem.calcularTempo(Viagem.calcularDistancia(path.get(i),path.get(i+1)));

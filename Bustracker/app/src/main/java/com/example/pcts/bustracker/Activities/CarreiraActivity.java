@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
+import com.example.pcts.bustracker.Managers.GestorNotificacao;
 import com.example.pcts.bustracker.Model.Autocarro;
 import com.example.pcts.bustracker.Model.Carreira;
 import com.example.pcts.bustracker.Model.Notificacao;
@@ -87,8 +88,11 @@ public class CarreiraActivity extends AppCompatActivity {
                 return true;
             case R.id.criar_notificacao:
                 Intent intent = new Intent(this, NovaNotificacaoActivity.class);
-                Notificacao notificacao = new Notificacao(null,this.carreira,0);
-                intent.putExtra(NovaNotificacaoActivity.KEY_NOTIFICACAO_INTENT, notificacao.getId());
+
+                Toast.makeText(this, "carreira" + carreira.getId(), Toast.LENGTH_SHORT).show();
+
+
+                intent.putExtra(NovaNotificacaoActivity.KEY_NOTIFICACAO_INTENT_CARREIRA, this.carreira.getId());
                 startActivity(intent);
                 return true;
             case R.id.adicionar_favoritos:

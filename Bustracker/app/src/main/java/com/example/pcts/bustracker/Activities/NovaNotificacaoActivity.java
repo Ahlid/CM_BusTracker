@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.pcts.bustracker.Lists.StandartSpinner;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
@@ -27,9 +28,11 @@ import java.util.List;
 public class NovaNotificacaoActivity extends AppCompatActivity {
 
     public final static String KEY_NOTIFICACAO_INTENT = "Notificacao";
+    public final static String KEY_NOTIFICACAO_INTENT_CARREIRA = "Carreira";
     private GestorNotificacao gestorNotificacao;
     private Notificacao notificacao;
-
+    Carreira carreiraAtual;
+    Paragem paragemAtual;
 
 
     @Override
@@ -44,8 +47,18 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
         this.notificacao = gestorNotificacao.getNotificacaoById(notificacaoId);
 
         if(this.notificacao == null){
+            this.notificacao = new Notificacao(null,null,0);
+            int carreiraId = getIntent().getIntExtra(KEY_NOTIFICACAO_INTENT_CARREIRA, -1);
+            if(carreiraId > 0) {
+                this.carreiraAtual = GestorInformacao.getInstance().findCarreiraById(carreiraId);
+
+            }
+
             novaNotificacao();
+
         }else{
+            this.carreiraAtual = this.notificacao.getCarreira();
+            this.paragemAtual = this.notificacao.getParagem();
             editarNotificacao();
         }
 
@@ -55,8 +68,7 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
 
     private void configSpinner() {
 
-        final Carreira carreiraAtual = this.notificacao.getCarreira();
-        final Paragem paragemAtual = this.notificacao.getParagem();
+
 
         List<StandartSpinner> carreirasListaSpinner = new ArrayList<>();
         List<StandartSpinner> paragensListaSpinner = new ArrayList<>();
@@ -82,6 +94,7 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
             for(Paragem p : listaParagens){
                 paragensListaSpinner.add(new StandartSpinner(p.getId(), p.getNome()));
             }
+            Toast.makeText(this, "paragens" + paragensListaSpinner.toString(), Toast.LENGTH_SHORT).show();
         }
 
         //Adaptação das listas aos spinners
@@ -179,6 +192,7 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
                 StandartSpinner carreiraSTDSpinner = (StandartSpinner) carreirasSpinner.getSelectedItem();
                 Carreira carreira = GestorInformacao.getInstance().findCarreiraById(carreiraSTDSpinner.id);
                 notificacao.setCarreira(carreira);
@@ -199,5 +213,8 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
 }

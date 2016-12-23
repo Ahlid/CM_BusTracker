@@ -143,10 +143,14 @@ public class Viagem implements Comparable{
 
     }
     public boolean contemPonto(LatLng ponto){
+        try{
         for (LatLng l : this.trajeto){
             if(l.longitude == ponto.longitude && l.latitude == ponto.latitude){
                 return true;
             }
+        }}
+        catch(Exception e){
+            return false;
         }
 
         return false;
@@ -162,5 +166,9 @@ public class Viagem implements Comparable{
                 ", paragemAtual=" + paragemAtual +
                 ", tipoViagem=" + tipoViagem +
                 '}';
+    }
+
+    public static int converterParaSegundos(float tempo) {
+        return (int) tempo/60/2;
     }
 }
