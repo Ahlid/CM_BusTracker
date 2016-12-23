@@ -13,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pcts.bustracker.Activities.CarreiraActivity;
+import com.example.pcts.bustracker.Activities.NovaNotificacaoActivity;
+import com.example.pcts.bustracker.Activities.ParagemActivity;
+import com.example.pcts.bustracker.Activities.TrajetoCarreiraActivity;
+import com.example.pcts.bustracker.Activities.ViagemActivity;
 import com.example.pcts.bustracker.Model.Carreira;
 import com.example.pcts.bustracker.R;
 
@@ -109,12 +113,16 @@ public class FavoritesAdapterCarreira extends BaseAdapter {
                                 break;
 
                             case R.id.ver_no_mapa_favoritos:
-
+                                Intent trj = new Intent(context, ViagemActivity.class);
+                                context.startActivity(trj);
                                 break;
 
                             case R.id.criar_notificacao_favoritos:
-
+                                Intent noti = new Intent(context, NovaNotificacaoActivity.class);
+                                noti.putExtra(NovaNotificacaoActivity.KEY_NOTIFICACAO_INTENT_CARREIRA, carreiras.get(position).getId());
+                                context.startActivity(noti);
                                 break;
+
 
                             default:break;
                         }

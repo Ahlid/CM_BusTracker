@@ -13,7 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pcts.bustracker.Activities.CarreiraActivity;
+import com.example.pcts.bustracker.Activities.NovaNotificacaoActivity;
 import com.example.pcts.bustracker.Activities.ParagemActivity;
+import com.example.pcts.bustracker.Activities.ParagemNoMapaActivity;
 import com.example.pcts.bustracker.Model.Paragem;
 import com.example.pcts.bustracker.R;
 
@@ -121,11 +123,15 @@ public class FavoritesAdapterParagem extends BaseAdapter {
                                 break;
 
                             case R.id.ver_no_mapa_favoritos:
+                                Intent mapa = new Intent(context, ParagemNoMapaActivity.class);
+                                mapa.putExtra(ParagemNoMapaActivity.KEY_PARAGEM, paragens.get(position).getId());
+                                context.startActivity(mapa);
 
                                 break;
 
                             case R.id.criar_notificacao_favoritos:
-
+                                    Intent noti = new Intent(context, NovaNotificacaoActivity.class);
+                                    context.startActivity(noti);
                                 break;
 
                             default:break;

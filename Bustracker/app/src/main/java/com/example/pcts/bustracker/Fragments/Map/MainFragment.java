@@ -191,7 +191,13 @@ public class MainFragment extends Fragment implements ViagemObserver {
             public void run() {
                 mMap.clear();
 
-                configuremap();
+                try {
+                    configuremap();
+                }catch (Exception r){
+
+
+                }
+
 
             }
         });
