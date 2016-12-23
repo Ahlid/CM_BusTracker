@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.pcts.bustracker.Lists.AutocarrosEmCirculacaoAdapter;
 import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Managers.GestorNotificacao;
@@ -103,11 +104,6 @@ public class CarreiraActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.ver_no_mapa:
-                Intent intentm = new Intent(this, ViagemActivity.class);
-                startActivity(intentm);
-                return true;
-
 
             case R.id.criar_notificacao:
                 Intent intent = new Intent(this, NovaNotificacaoActivity.class);
@@ -157,33 +153,15 @@ public class CarreiraActivity extends AppCompatActivity {
 
         List<Viagem> viagens = this.gestorInformacao.getViagens();
         ListView emCirculacaolistView = (ListView) this.findViewById(R.id.em_circulacao);
-        List<Map<String, Object>> listaDeItemsEmCirculacao = new ArrayList<>();
+        List<Viagem> listaDeViagensEmCirculacao = new ArrayList<>();
 
         for (Viagem viagem : viagens) {
             //Viagem pertence a esta carreira
             if (viagem.getCarreira().getId() == this.carreira.getId()) {
-                HashMap<String, Object> mapaItem = new HashMap<String, Object>();
-                mapaItem.put("nome_paragem", viagem.getParagemAtual().getNome());
-                mapaItem.put("tempo_desde_partida", "Partiu às " + viagem.getDataPartida().getHours() + ":" + viagem.getDataPartida().getMinutes());
-                mapaItem.put("bicycle_image", viagem.getAutocarro().isTemAcessoBicicleta());
-                mapaItem.put("wheelchair_image", viagem.getAutocarro().isTemAcessoCadeiraDeRodas());
-                listaDeItemsEmCirculacao.add(mapaItem);
+                listaDeViagensEmCirculacao.add(viagem);
             }
         }
-
-        ListAdapter adapter = new SimpleAdapter(
-                this.getApplicationContext(), listaDeItemsEmCirculacao,
-                R.layout.em_circulacao_item, new String[]{
-                "nome_paragem", "tempo_desde_partida"
-                , "bicycle_image", "wheelchair_image"
-        },
-                new int[]{
-                        R.id.nome_paragem,
-                        R.id.tempo_desde_partida,
-                        R.id.bicycle_image,
-                        R.id.wheelchair_image
-                }
-        );
+        AutocarrosEmCirculacaoAdapter adapter = new AutocarrosEmCirculacaoAdapter(this, viagens);
 
         emCirculacaolistView.setAdapter(adapter);
 

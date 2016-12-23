@@ -55,9 +55,10 @@ import static java.lang.System.out;
 
 public class ViagemActivity extends FragmentActivity implements OnMapReadyCallback, ViagemObserver {
 
-
+    public final static String KEY_VIAGEM_INTENT = "Viagem";
     private GoogleMap mMap;
     private Viagem viagem;
+    private int distancia;
 
 
     @Override
@@ -65,9 +66,13 @@ public class ViagemActivity extends FragmentActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viagem_main);
 
+        GestorInformacao gestorInformacao = GestorInformacao.getInstance();
+        int idViagem = getIntent().getIntExtra(KEY_VIAGEM_INTENT, 1);
+        viagem = gestorInformacao.getViagemById(idViagem);
+
+        this.distancia = 0;
 
         //handle viagem
-        viagem = GestorInformacao.getInstance().getViagemById(1);
         viagem.addObserver(this);
 
         //((Toolbar) findViewById(R.id.toolbar)).setTitle("Viagem Tracker");
@@ -131,79 +136,90 @@ public class ViagemActivity extends FragmentActivity implements OnMapReadyCallba
     @Override
     public void onChangePosition(Viagem v) {
 
-final Context context = this;
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                mMap.clear();
+        //otimização para nao tar a actualizar sempre
+        if(viagem.getTrajeto().size() >2){
+        List<LatLng>  trajeto =  viagem.getTrajeto();
 
-                mMap.setMyLocationEnabled(true);
-                mMap.getUiSettings().setZoomControlsEnabled(true);
-                // Other supported types include: MAP_TYPE_NORMAL,
-                // MAP_TYPE_TERRAIN, MAP_TYPE_HYBRID and MAP_TYPE_NONE
-                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                PolylineOptions lineOptions = new PolylineOptions();
-                lineOptions.getPoints().clear();
-                lineOptions.addAll(viagem.getTrajeto());
-                lineOptions.width(10);
-                lineOptions.color(Color.BLUE);
-                mMap.addPolyline(lineOptions);
-              //  mMap.setBuildingsEnabled(true);
+            distancia += Viagem.calcularDistancia(trajeto.get(trajeto.size()-2),trajeto.get(trajeto.size()-1));
+        }
 
 
-                if(viagem.getTrajeto().size() >0) {
-                    LatLng posicao = viagem.getTrajeto().get(viagem.getTrajeto().size()-1);
-                    CameraPosition cameraPosition = new CameraPosition.Builder().
-                            target(posicao).
-                            //tilt(60).
-                            zoom(19).
+       if(distancia > 20) {
+           distancia = 0;
+           final Context context = this;
+           new Handler(Looper.getMainLooper()).post(new Runnable() {
+               @Override
+               public void run() {
+                   mMap.clear();
 
-                            build();
-
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-                    BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.ic_tracker);
-                    Bitmap b=bitmapdraw.getBitmap();
-
-                    b = get_Resized_Bitmap(b, 250, 250);
-
-                    final MarkerOptions actual = new MarkerOptions()
-                            .position(posicao)
-                            .title(viagem.getCarreira().getNome());
-                            //.icon(BitmapDescriptorFactory.fromBitmap(b));
-
-
-                    mMap.addMarker(actual);
-
-                    addCircleToMap(posicao, mMap);
+                   mMap.setMyLocationEnabled(true);
+                   mMap.getUiSettings().setZoomControlsEnabled(true);
+                   // Other supported types include: MAP_TYPE_NORMAL,
+                   // MAP_TYPE_TERRAIN, MAP_TYPE_HYBRID and MAP_TYPE_NONE
+                   mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                   PolylineOptions lineOptions = new PolylineOptions();
+                   lineOptions.getPoints().clear();
+                   lineOptions.addAll(viagem.getTrajeto());
+                   lineOptions.width(10);
+                   lineOptions.color(Color.BLUE);
+                   mMap.addPolyline(lineOptions);
+                   //  mMap.setBuildingsEnabled(true);
 
 
-                }
-                //paragens
+                   if (viagem.getTrajeto().size() > 0) {
+                       LatLng posicao = viagem.getTrajeto().get(viagem.getTrajeto().size() - 1);
+                       CameraPosition cameraPosition = new CameraPosition.Builder().
+                               target(posicao).
+                               //tilt(60).
+                                       zoom(19).
 
-                List<Paragem> paragens = GestorInformacao.getInstance().getParagems();
+                                       build();
 
-                for(Paragem p : paragens){
-                    Drawable drawable = ContextCompat.getDrawable(context, R.drawable.ic_bus_stop);
-                    Bitmap b = MainFragment.castToBitMap(drawable);
+                       mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                    //b = get_Resized_Bitmap(b, 250, 250);
+                       BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_tracker);
+                       Bitmap b = bitmapdraw.getBitmap();
 
-                    final MarkerOptions actual = new MarkerOptions()
-                            .position(p.getPosicao())
-                            .title(p.getNome())
-                            .icon(BitmapDescriptorFactory.fromBitmap(b));
+                       b = get_Resized_Bitmap(b, 250, 250);
 
-
-                    mMap.addMarker(actual);
+                       final MarkerOptions actual = new MarkerOptions()
+                               .position(posicao)
+                               .title(viagem.getCarreira().getNome());
+                       //.icon(BitmapDescriptorFactory.fromBitmap(b));
 
 
-                }
+                       mMap.addMarker(actual);
+
+                       addCircleToMap(posicao, mMap);
 
 
-            }
-        });
+                   }
+                   //paragens
 
+                   List<Paragem> paragens = GestorInformacao.getInstance().getParagems();
+
+                   for (Paragem p : paragens) {
+                       Drawable drawable = ContextCompat.getDrawable(context, R.drawable.ic_bus_stop);
+                       Bitmap b = MainFragment.castToBitMap(drawable);
+
+                       //b = get_Resized_Bitmap(b, 250, 250);
+
+                       final MarkerOptions actual = new MarkerOptions()
+                               .position(p.getPosicao())
+                               .title(p.getNome())
+                               .icon(BitmapDescriptorFactory.fromBitmap(b));
+
+
+                       mMap.addMarker(actual);
+
+
+                   }
+
+
+               }
+           });
+
+       }
         Log.d("Mapa " + viagem.getId(), " viagem changed: ");
     }
 
