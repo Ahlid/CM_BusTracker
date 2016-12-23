@@ -84,11 +84,7 @@ public class FavoritesAdapterParagem extends BaseAdapter {
         trash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Scan result");
-                builder.setMessage("Remover "+ paragens.get(position).toString()) ;
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+
 
 
                 that.paragens.remove(paragens.get(position));//este lista é a mesma dos favoritos
