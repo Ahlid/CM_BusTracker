@@ -1,5 +1,7 @@
 package com.example.pcts.bustracker.Activities;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -42,6 +44,7 @@ public class MainActivity extends FragmentActivity
     private Toolbar toolbar = null;
     private ZXingScannerView mScanerView;
     private HashMap<Viagem,MarkerOptions> hashViagem;
+    private  NotificacaoService notificacaoService;
 
 
     @Override
@@ -54,8 +57,13 @@ public class MainActivity extends FragmentActivity
         GestorFavoritos.getInstance(this);
         GestorNotificacao.getInstance(this);
 
-        Intent mServiceIntent = new Intent(this, NotificacaoService.class);
-        startService(mServiceIntent);
+
+        notificacaoService = new NotificacaoService();
+        Intent mServiceIntent = new Intent(this, notificacaoService.getClass());
+
+        if (!isMyServiceRunning(notificacaoService.getClass())) {
+            startService(mServiceIntent);
+        }
 
         setContentView(R.layout.activity_main);
 
@@ -150,6 +158,17 @@ public class MainActivity extends FragmentActivity
         builder.setMessage(result.getText());
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("isMyServiceRunning?", true+"");
+                return true;
+            }
+        }
+        Log.i ("isMyServiceRunning?", false+"");
+        return false;
     }
 
 
