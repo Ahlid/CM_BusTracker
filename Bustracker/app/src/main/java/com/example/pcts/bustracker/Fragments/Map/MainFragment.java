@@ -120,7 +120,7 @@ public class MainFragment extends Fragment {
         FetchUrl FetchUrl = new FetchUrl(map);
 
         // Start downloading json data from Google Directions API
-        FetchUrl.execute(url);
+        //FetchUrl.execute(url);
         //move map camera
         map.moveCamera(CameraUpdateFactory.newLatLng(origin));
         map.animateCamera(CameraUpdateFactory.zoomTo(11));

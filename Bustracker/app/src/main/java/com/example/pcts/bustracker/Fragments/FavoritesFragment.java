@@ -1,5 +1,6 @@
 package com.example.pcts.bustracker.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TabHost;
 
+import com.example.pcts.bustracker.Activities.ViagemActivity;
 import com.example.pcts.bustracker.Lists.FavoritesAdapterCarreira;
 import com.example.pcts.bustracker.Lists.FavoritesAdapterParagem;
 import com.example.pcts.bustracker.Managers.GestorFavoritos;
@@ -64,10 +66,13 @@ View rootView;
                 builder.setTitle("Scan result");
                 builder.setMessage(GestorFavoritos.getInstance(getContext()).toString()) ;
                 AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+//                alertDialog.show();
 
                 actualizarListaCarreiras();
                 actualizarListaParagens();
+
+                Intent intent = new Intent(getContext(), ViagemActivity.class);
+                getContext().startActivity(intent);
 
             }
         });

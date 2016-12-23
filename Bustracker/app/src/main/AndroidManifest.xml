@@ -47,6 +47,11 @@
 
         </activity>
         <activity android:name=".Activities.NovaNotificacaoActivity"></activity>
+        <activity android:name=".Activities.ViagemActivity"></activity>
+
+        <service
+            android:name=".Service.NotificacaoService"
+            android:exported="false"/>
 
     </application>
 

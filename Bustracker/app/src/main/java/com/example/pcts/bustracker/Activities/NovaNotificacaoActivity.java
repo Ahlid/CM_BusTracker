@@ -57,7 +57,7 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
             this.paragemAtual = notificacao.getParagem();
 
             editarNotificacao();
-            
+
         }
 
         configSpinner();

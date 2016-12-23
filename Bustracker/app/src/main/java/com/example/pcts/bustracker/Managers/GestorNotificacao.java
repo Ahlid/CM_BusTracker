@@ -1,13 +1,25 @@
 package com.example.pcts.bustracker.Managers;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.pcts.bustracker.Database.DatabaseNotificacoes;
 import com.example.pcts.bustracker.Model.Carreira;
 import com.example.pcts.bustracker.Model.Notificacao;
 import com.example.pcts.bustracker.Model.Paragem;
+import com.example.pcts.bustracker.Model.Viagem;
+import com.example.pcts.bustracker.Model.ViagemObserver;
+import com.example.pcts.bustracker.R;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,16 +29,20 @@ import java.util.List;
  * Created by pcts on 11/29/2016.
  */
 
-public class GestorNotificacao {
+public class GestorNotificacao implements ViagemObserver {
 
     private static GestorNotificacao instance;
     private DatabaseNotificacoes db;
+    private Context context;
 
     private List<Notificacao> notificacoes;
 
     private GestorNotificacao(Context context){
         this.notificacoes = new ArrayList<>();
         this.db = new DatabaseNotificacoes(context);
+        this.context = context;
+
+        GestorInformacao.getInstance().getViagens().get(0).addObserver(this);
 
         Cursor c = db.getAllData();
 
@@ -119,5 +135,66 @@ public class GestorNotificacao {
         }
 
         return n;
+    }
+
+    protected void showToast(final String msg) {
+        //gets the main thread
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                // run this code in the main thread
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onChangePosition(Viagem v) {
+        int i =0;
+        Paragem p = GestorInformacao.getInstance().findParagemById(2);
+
+        float distancia = v.getTrajeto().size() > 0 ? Viagem.calcularDistancia(v.getTrajeto().get(v.getTrajeto().size()-1), p.getPosicao()) : 9999999;
+
+
+        showToast("Ja tem o "+p.getNome()+"? R: "+v.contemPonto(p.getPosicao()));
+        Log.d("Notificacao", "Ja tem o "+p.getNome()+"? R: "+v.contemPonto(p.getPosicao()) +"Distancia: "+distancia );
+
+
+        if(v.getTrajeto().size() > 1){
+            LatLng actual = v.getTrajeto().get(v.getTrajeto().size()-1);
+
+            for (Notificacao n: notificacoes) {
+                Log.d("Notificacao TEMPO", "tempo: "+ Viagem.calcularTempo(Viagem.calcularDistancia(actual, n.getParagem().getPosicao())) +"devia ser" + n.getMinutos()*60*60*2);
+
+                if(n.getEstado() && !v.contemPonto(n.getParagem().getPosicao())){
+                if(n.getCarreira().getId() == v.getCarreira().getId()){//mesma carreira
+                    //ver se demora menos do tempo
+                    Log.d("Notificacao TEMPO", "tempo: "+ Viagem.calcularTempo(Viagem.calcularDistancia(actual, n.getParagem().getPosicao())) +"devia ser" + n.getMinutos()*60*60*2);
+
+                    if(Viagem.calcularTempo(Viagem.calcularDistancia(actual, n.getParagem().getPosicao())) < n.getMinutos()*60*60*2){
+
+                        //mandar a notificação e meter off o estado
+                        n.setEstado(false);
+                        Log.d("Notificacao", "sending");
+
+                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+                        mBuilder.setSmallIcon(R.drawable.ic_bus);
+                        mBuilder.setContentTitle("Bus is COMING!!!!");
+                        mBuilder.setContentText("Menos de "+n.getMinutos()+ "minutos para a carreira "+n.getCarreira().getNumero()+" "+n.getCarreira().getNome()+" chegar á paragem "+n.getParagem().getNome());
+
+                        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+// notificationID allows you to update the notification later on.
+                        mNotificationManager.notify(++i, mBuilder.build());
+
+                    }
+                }
+            }
+            }
+
+        }
+
+
     }
 }

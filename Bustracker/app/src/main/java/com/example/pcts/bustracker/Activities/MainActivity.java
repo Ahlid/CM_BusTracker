@@ -1,5 +1,6 @@
 package com.example.pcts.bustracker.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import com.example.pcts.bustracker.Managers.GestorFavoritos;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Managers.GestorNotificacao;
 import com.example.pcts.bustracker.R;
+import com.example.pcts.bustracker.Service.NotificacaoService;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -42,6 +44,9 @@ public class MainActivity extends FragmentActivity
         GestorInformacao.getInstance();
         GestorFavoritos.getInstance(this);
         GestorNotificacao.getInstance(this);
+
+        Intent mServiceIntent = new Intent(this, NotificacaoService.class);
+        startService(mServiceIntent);
 
         setContentView(R.layout.activity_main);
 

@@ -1,5 +1,8 @@
 package com.example.pcts.bustracker.Model;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -14,6 +17,9 @@ public class Viagem implements Comparable{
     private Date dataPartida;
     private Paragem paragemAtual;
     private TipoViagem tipoViagem;
+    private ArrayList<LatLng> trajeto;
+    private ArrayList<ViagemObserver> observers;
+    private static final int MILISEGUNDOS_POR_METRO =100;
 
     public Viagem(int id,Autocarro autocarro, Carreira carreira, Date dataPartida, TipoViagem tipoViagem) {
         this.id=id;
@@ -22,6 +28,8 @@ public class Viagem implements Comparable{
         this.dataPartida = dataPartida;
         this.paragemAtual = carreira.getParagem(0);
         this.tipoViagem = tipoViagem;
+        this.trajeto = new ArrayList<>();
+        this.observers = new ArrayList<>();
     }
 
     public Autocarro getAutocarro() {
@@ -72,6 +80,30 @@ public class Viagem implements Comparable{
         this.tipoViagem = tipoViagem;
     }
 
+    public boolean addObserver(ViagemObserver obs) {
+       return this.observers.add(obs);
+    }
+
+    public boolean removeObserver(ViagemObserver obs) {
+        return this.observers.remove(obs);
+    }
+
+    public void  notifyObservers(){
+        for (ViagemObserver obs: this.observers ) {
+            obs.onChangePosition(this);
+        }
+    }
+
+    public void addPosition(LatLng position){
+        this.trajeto.add(position);
+        this.notifyObservers();
+    }
+
+    public void clearPoints(){
+        this.trajeto.clear();
+        this.notifyObservers();
+    }
+
     @Override
     public int compareTo(Object o) {
 
@@ -82,6 +114,42 @@ public class Viagem implements Comparable{
 
         return timeT - timeO;
 
+    }
+
+    public ArrayList<LatLng> getTrajeto() {
+        return trajeto;
+    }
+
+
+    public static float calcularDistancia(LatLng p1, LatLng p2) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(p2.latitude-p1.latitude);
+        double dLng = Math.toRadians(p2.longitude-p1.longitude);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(Math.toRadians(p1.latitude)) * Math.cos(Math.toRadians(p2.latitude)) *
+                        Math.sin(dLng/2) * Math.sin(dLng/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        float dist = (float) (earthRadius * c);
+
+        return dist;
+    }
+
+    public  static float calcularTempo(float distancia){
+        return distancia*MILISEGUNDOS_POR_METRO;
+    }
+
+    public static int converterParaMinutos(float tempo){
+        return (int) tempo/60/60/2;
+
+    }
+    public boolean contemPonto(LatLng ponto){
+        for (LatLng l : this.trajeto){
+            if(l.longitude == ponto.longitude && l.latitude == ponto.latitude){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
