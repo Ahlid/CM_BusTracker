@@ -105,8 +105,6 @@
                 android:id="@+id/switch_notificacao"
                 android:layout_weight="1"
                 android:checked="true"
-                android:thumb="@drawable/thumb"
-                android:track="@drawable/track"
                 android:thumbTextPadding="5dp"
                 android:switchMinWidth="40dp"
                 android:textOn="On"
