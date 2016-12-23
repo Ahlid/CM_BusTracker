@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.pcts.bustracker.Lists.StandartSpinner;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
@@ -62,7 +61,7 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
             editarNotificacao();
         }
 
-        configSpinner();
+        configurarSpinners();
 
     }
 
@@ -73,35 +72,24 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
         GestorNotificacao.getInstance().notifyChanges();
     }
 
-    private void configSpinner() {
-
-
+    private void configurarSpinners() {
 
         List<StandartSpinner> carreirasListaSpinner = new ArrayList<>();
         List<StandartSpinner> paragensListaSpinner = new ArrayList<>();
         List<Carreira> listaCarreiras= GestorInformacao.getInstance().getCarreiras();
 
-        for(Carreira c : listaCarreiras){
-            carreirasListaSpinner.add(new StandartSpinner(c.getId(), c.getNumero() + " " + c.getNome()));
+
+        for(Carreira carreira : GestorInformacao.getInstance().getCarreiras()){
+            carreirasListaSpinner.add(new StandartSpinner(carreira.getId(), carreira.getNumero() + " " + carreira.getNome()));
         }
 
-        if(carreiraAtual == null){
-
-            for(Carreira carreira : GestorInformacao.getInstance().getCarreiras()){
-                carreirasListaSpinner.add(new StandartSpinner(carreira.getId(), carreira.getNome()));
-            }
-
-        } else {
-
-            for(Carreira carreira : GestorInformacao.getInstance().getCarreiras()){
-                carreirasListaSpinner.add(new StandartSpinner(carreira.getId(), carreira.getNome()));
-            }
+        if(carreiraAtual != null) {
 
             List<Paragem> listaParagens= carreiraAtual.getTrajeto();
             for(Paragem p : listaParagens){
                 paragensListaSpinner.add(new StandartSpinner(p.getId(), p.getNome()));
             }
-            Toast.makeText(this, "paragens" + paragensListaSpinner.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "paragens" + paragensListaSpinner.toString(), Toast.LENGTH_SHORT).show();
         }
 
         //Adaptação das listas aos spinners
@@ -137,9 +125,7 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
                 paragemSpinner.setAdapter(null);
-
             }
         });
 
@@ -200,7 +186,6 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
         confirmacaoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 StandartSpinner carreiraSTDSpinner = (StandartSpinner) carreirasSpinner.getSelectedItem();
                 Carreira carreira = GestorInformacao.getInstance().findCarreiraById(carreiraSTDSpinner.id);

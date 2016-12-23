@@ -1,4 +1,4 @@
-package com.example.pcts.bustracker.Activities;
+package com.example.pcts.bustracker.Managers;
 
 /**
  * Created by pcts on 12/23/2016.

@@ -64,6 +64,15 @@ public class FavoritesAdapterCarreira extends BaseAdapter {
 
         v.setTag(this.carreiras.get(position).getId());
 
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, CarreiraActivity.class);
+                intent.putExtra(CarreiraActivity.KEY_CARREIRA_INTENT, carreiras.get(position).getId());
+                context.startActivity(intent);
+            }
+        });
+
 
         ImageView trash = (ImageView) v.findViewById(R.id.remove_carreira_favoritos);
         trash.setClickable(true);
