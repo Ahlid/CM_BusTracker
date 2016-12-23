@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.pcts.bustracker.Activities.NovaNotificacaoActivity;
 import com.example.pcts.bustracker.Activities.ParagemActivity;
@@ -78,9 +79,9 @@ public class NotificacaoAdapter extends BaseAdapter{
             minutos.setText(this.noificacoes.get(position).getMinutos()+" Minutos");
 
 
-            Switch switc = (Switch) v.findViewById(R.id.switch_notificacao);
-            switc.setChecked(this.noificacoes.get(position).getEstado());
-            switc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            ToggleButton toggle = (ToggleButton) v.findViewById(R.id.switch_notificacao);
+            toggle.setChecked(this.noificacoes.get(position).getEstado());
+            toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     Notificacao n = noificacoes.get(position);
@@ -98,9 +99,9 @@ public class NotificacaoAdapter extends BaseAdapter{
                 }
             });
 
-            LinearLayout l = (LinearLayout) v.findViewById(R.id.linear_notificacao);
-            l.setClickable(true);
-            l.setOnClickListener(new View.OnClickListener() {
+
+            v.setClickable(true);
+            v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
