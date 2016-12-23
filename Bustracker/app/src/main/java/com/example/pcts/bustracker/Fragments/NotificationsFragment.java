@@ -73,7 +73,6 @@ View rootView;
 
     private void actualizarListaCarreiras(){
 
-
         if(GestorNotificacao.getInstance().getNotificacoes().size() == 0) {
             for (Paragem p: GestorInformacao.getInstance().getParagems()) {
                 GestorNotificacao.getInstance().addNotificacao(new Notificacao(p,GestorInformacao.getInstance().findCarreiraById(1),6));

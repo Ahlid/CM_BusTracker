@@ -65,17 +65,6 @@
                                         android:layout_height="wrap_content">
                                     </ListView>
 
-                                <TextView
-                                    android:text="Recente:"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-
-                                <ListView
-                                    android:id="@+id/list_view_recentes_procura_carreiras"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-                                </ListView>
-
 
                             </LinearLayout>
 
@@ -102,19 +91,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
                                 </ListView>
-
-                                <TextView
-                                    android:text="Recente:"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-
-                                <ListView
-                                    android:id="@+id/list_view_recentes_procura_paragens"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-                                </ListView>
-
-
 
                             </LinearLayout>
 

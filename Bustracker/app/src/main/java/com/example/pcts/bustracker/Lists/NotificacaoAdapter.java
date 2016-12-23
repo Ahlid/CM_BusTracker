@@ -74,7 +74,7 @@ public class NotificacaoAdapter extends BaseAdapter{
             });
 
             nomeParagem.setText(this.noificacoes.get(position).getParagem().getNome());
-            nomeCarreira.setText("Carreia " + this.noificacoes.get(position).getCarreira().getNumero());
+            nomeCarreira.setText("Carreira " + this.noificacoes.get(position).getCarreira().getNumero());
             minutos.setText(this.noificacoes.get(position).getMinutos()+" Minutos");
 
 
