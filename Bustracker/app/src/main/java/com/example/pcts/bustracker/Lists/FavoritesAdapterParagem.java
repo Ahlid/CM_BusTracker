@@ -63,6 +63,16 @@ public class FavoritesAdapterParagem extends BaseAdapter {
         v.setTag(this.paragens.get(position).getId());
 
 
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ParagemActivity.class);
+                intent.putExtra(ParagemActivity.KEY_PARAGEM_INTENT, paragens.get(position).getId());
+                context.startActivity(intent);
+            }
+        });
+
+
         ImageView trash = (ImageView) v.findViewById(R.id.remove_paragem_favoritos);
         trash.setClickable(true);
 
