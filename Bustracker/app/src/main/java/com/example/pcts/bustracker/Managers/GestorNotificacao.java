@@ -12,7 +12,9 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.pcts.bustracker.Activities.GestorObserver;
 import com.example.pcts.bustracker.Database.DatabaseNotificacoes;
+import com.example.pcts.bustracker.Lists.NotificacaoAdapter;
 import com.example.pcts.bustracker.Model.Carreira;
 import com.example.pcts.bustracker.Model.Notificacao;
 import com.example.pcts.bustracker.Model.Paragem;
@@ -24,21 +26,24 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by pcts on 11/29/2016.
  */
 
-public class GestorNotificacao implements ViagemObserver {
+public class GestorNotificacao  implements ViagemObserver {
 
     private static GestorNotificacao instance;
     private DatabaseNotificacoes db;
     private Context context;
+    private List<GestorObserver> observers;
 
     private List<Notificacao> notificacoes;
 
     private GestorNotificacao(Context context){
         this.notificacoes = new ArrayList<>();
+        this.observers = new ArrayList<>();
         this.db = new DatabaseNotificacoes(context);
         this.context = context;
 
@@ -62,7 +67,7 @@ public class GestorNotificacao implements ViagemObserver {
 
         }
 
-        order();
+        //order();
 
 
     }
@@ -98,9 +103,27 @@ public class GestorNotificacao implements ViagemObserver {
 
         if(res){
             db.deleteData(Long.toString(n.getId()));
-        }
 
+        }
+        notifyChanges();
         return res;
+    }
+    
+    public boolean updateNotificacao(Notificacao n){
+        for (Notificacao notificacao : notificacoes) {
+            if(notificacao.getId() == n.getId()){
+                notificacao.setCarreira(n.getCarreira());
+                notificacao.setParagem(n.getParagem());
+                notificacao.setMinutos(n.getMinutos());
+                notificacao.setEstado(n.getEstado());
+                this.db.updateDate(Long.toString(notificacao.getId()), notificacao.getCarreira().getId(), notificacao.getParagem().getId(), notificacao.getMinutos(), notificacao.getEstado());
+                notifyChanges();
+                return true;
+            }
+        }
+        notifyChanges();
+        return false;
+        
     }
 
     public boolean removeNotificacaoById(Long id){
@@ -108,8 +131,10 @@ public class GestorNotificacao implements ViagemObserver {
         for (Notificacao n : this.notificacoes) {
             if(n.getId() == id){
                 res = this.removeNotificacao(n);
+
             }
         }
+        notifyChanges();
         return res;
     }
 
@@ -117,11 +142,6 @@ public class GestorNotificacao implements ViagemObserver {
         return notificacoes;
     }
 
-    public void order() {
-
-        Collections.sort(this.notificacoes);
-
-    }
 
 
     public Notificacao getNotificacaoById(int id) {
@@ -148,6 +168,13 @@ public class GestorNotificacao implements ViagemObserver {
             }
         });
     }
+
+    public void notifyChanges(){
+        for (GestorObserver g : this.observers){
+            g.onChange(this);
+        }
+    }
+
 
     @Override
     public void onChangePosition(Viagem v) {
@@ -194,6 +221,16 @@ public class GestorNotificacao implements ViagemObserver {
 
         }
 
+
+    }
+
+    public void addObserver(GestorObserver g) {
+        this.observers.add(g);
+
+    }
+
+    public void removeObserver(GestorObserver g) {
+        this.observers.remove(g);
 
     }
 }

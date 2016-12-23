@@ -1,13 +1,17 @@
 package com.example.pcts.bustracker.Activities;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
 import com.example.pcts.bustracker.Fragments.Map.FetchUrl;
+import com.example.pcts.bustracker.Fragments.Map.MainFragment;
 import com.example.pcts.bustracker.GoogleMapsUtilities.MyItem;
 import com.example.pcts.bustracker.GoogleMapsUtilities.OwnIconRendered;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
@@ -17,7 +21,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.clustering.ClusterManager;
 
@@ -49,6 +55,28 @@ public class TrajetoCarreiraActivity extends AppCompatActivity implements OnMapR
     public void onMapReady(GoogleMap map) {
         mMap = map;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.528244, -8.882786), 15));
+
+
+        //paragens
+
+        List<Paragem> paragens = GestorInformacao.getInstance().getParagems();
+
+        for(Paragem p : paragens){
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_bus_stop);
+            Bitmap b = MainFragment.castToBitMap(drawable);
+
+            //b = get_Resized_Bitmap(b, 250, 250);
+
+            final MarkerOptions actual = new MarkerOptions()
+                    .position(p.getPosicao())
+                    .title(p.getNome())
+                    .icon(BitmapDescriptorFactory.fromBitmap(b));
+
+
+            mMap.addMarker(actual);
+
+
+        }
 
         setUpClusterer(map);
     }

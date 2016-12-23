@@ -66,6 +66,13 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public  void onDestroy(){
+        super.onDestroy();
+        GestorNotificacao.getInstance().notifyChanges();
+    }
+
     private void configSpinner() {
 
 
@@ -172,6 +179,8 @@ public class NovaNotificacaoActivity extends AppCompatActivity {
 
                 int minutos = Integer.parseInt(minutosEditText.getText().toString());
                 notificacao.setMinutos(minutos);
+
+                GestorNotificacao.getInstance().updateNotificacao(notificacao);
 
                 finish();
             }

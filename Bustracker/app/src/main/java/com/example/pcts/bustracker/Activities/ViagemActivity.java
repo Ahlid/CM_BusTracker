@@ -1,5 +1,6 @@
 package com.example.pcts.bustracker.Activities;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,16 +9,19 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
 
+import com.example.pcts.bustracker.Fragments.Map.MainFragment;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Model.Paragem;
 import com.example.pcts.bustracker.Model.Viagem;
@@ -99,14 +103,24 @@ public class ViagemActivity extends FragmentActivity implements OnMapReadyCallba
 
         List<Paragem> paragems = viagem.getCarreira().getTrajeto();
 
-        for(Paragem p : paragems){
-            MarkerOptions marker = new MarkerOptions().position(p.getPosicao()).title("Hello Maps");
+        //paragens
 
-        // Changing marker icon
-           // marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_stop));
+        List<Paragem> paragens = GestorInformacao.getInstance().getParagems();
 
-        // adding marker
-        //    mMap.addMarker(marker);
+        for(Paragem p : paragens){
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_bus_stop);
+            Bitmap b = MainFragment.castToBitMap(drawable);
+
+            //b = get_Resized_Bitmap(b, 250, 250);
+
+            final MarkerOptions actual = new MarkerOptions()
+                    .position(p.getPosicao())
+                    .title(p.getNome())
+                    .icon(BitmapDescriptorFactory.fromBitmap(b));
+
+
+            mMap.addMarker(actual);
+
 
         }
 
@@ -117,6 +131,7 @@ public class ViagemActivity extends FragmentActivity implements OnMapReadyCallba
     @Override
     public void onChangePosition(Viagem v) {
 
+final Context context = this;
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -164,16 +179,24 @@ public class ViagemActivity extends FragmentActivity implements OnMapReadyCallba
 
 
                 }
-                List<Paragem> paragems = viagem.getCarreira().getTrajeto();
+                //paragens
 
-                for(Paragem p : paragems){
-                    MarkerOptions marker = new MarkerOptions().position(p.getPosicao()).title(p.getNome());
+                List<Paragem> paragens = GestorInformacao.getInstance().getParagems();
 
-// Changing marker icon
-                    marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_stop));
+                for(Paragem p : paragens){
+                    Drawable drawable = ContextCompat.getDrawable(context, R.drawable.ic_bus_stop);
+                    Bitmap b = MainFragment.castToBitMap(drawable);
 
-// adding marker
-                    //mMap.addMarker(marker);
+                    //b = get_Resized_Bitmap(b, 250, 250);
+
+                    final MarkerOptions actual = new MarkerOptions()
+                            .position(p.getPosicao())
+                            .title(p.getNome())
+                            .icon(BitmapDescriptorFactory.fromBitmap(b));
+
+
+                    mMap.addMarker(actual);
+
 
                 }
 

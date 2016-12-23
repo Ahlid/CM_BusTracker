@@ -3,9 +3,12 @@ package com.example.pcts.bustracker.Activities;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 
+import com.example.pcts.bustracker.Fragments.Map.MainFragment;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
 import com.example.pcts.bustracker.Model.Paragem;
 import com.example.pcts.bustracker.R;
@@ -19,6 +22,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 /**
  * Created by pcts on 12/23/2016.
@@ -69,6 +74,28 @@ public class ParagemNoMapaActivity extends FragmentActivity implements OnMapRead
         mMap.addMarker(actual);
 
         addCircleToMap(actual.getPosition(), mMap);
+
+
+
+        List<Paragem> paragens = GestorInformacao.getInstance().getParagems();
+
+        for(Paragem p : paragens){
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_bus_stop);
+            Bitmap b = MainFragment.castToBitMap(drawable);
+
+            //b = get_Resized_Bitmap(b, 250, 250);
+
+            final MarkerOptions actual22 = new MarkerOptions()
+                    .position(p.getPosicao())
+                    .title(p.getNome())
+                    .icon(BitmapDescriptorFactory.fromBitmap(b));
+
+
+            mMap.addMarker(actual22);
+
+
+        }
+
 
     }
 

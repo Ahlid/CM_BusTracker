@@ -67,6 +67,21 @@ public class DatabaseNotificacoes extends SQLiteOpenHelper {
 
     }
 
+    public boolean updateDate(String id, int idCarreira, int idParagem, int minutos, boolean estado){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+
+        cv.put(COL_2,idCarreira);
+        cv.put(COL_3,idParagem);
+        cv.put(COL_4,minutos);
+        cv.put(COL_5,estado? 1 : 0);
+
+        db.update(TABLE_NAME, cv, COL_1+"="+id, null);
+
+        return true;
+    }
+
 
     //TODO: delete, get
 }

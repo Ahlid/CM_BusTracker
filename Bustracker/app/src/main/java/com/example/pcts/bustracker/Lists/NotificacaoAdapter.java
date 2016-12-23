@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.pcts.bustracker.Activities.GestorObserver;
 import com.example.pcts.bustracker.Activities.NovaNotificacaoActivity;
 import com.example.pcts.bustracker.Activities.ParagemActivity;
 import com.example.pcts.bustracker.Managers.GestorFavoritos;
@@ -20,12 +21,14 @@ import com.example.pcts.bustracker.Model.Notificacao;
 import com.example.pcts.bustracker.R;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by pcts on 12/22/2016.
  */
 
-public class NotificacaoAdapter extends BaseAdapter{
+public class NotificacaoAdapter extends BaseAdapter implements GestorObserver{
 
 
 
@@ -35,6 +38,8 @@ public class NotificacaoAdapter extends BaseAdapter{
     public NotificacaoAdapter(Context context, List<Notificacao> noificacoes) {
         this.context = context;
         this.noificacoes = noificacoes;
+
+        GestorNotificacao.getInstance().addObserver(this);
 
     }
 
@@ -55,6 +60,8 @@ public class NotificacaoAdapter extends BaseAdapter{
 
     @Override
     public View getView(final int position, final View convertView, ViewGroup parent) {
+
+
 
         final View v = View.inflate(context, R.layout.list_row_notificacoes, null);
 
@@ -90,9 +97,9 @@ public class NotificacaoAdapter extends BaseAdapter{
                 }else{
                     n.setEstado(false);
                 }
-                GestorNotificacao.getInstance().removeNotificacao(n);
-                GestorNotificacao.getInstance().addNotificacao(n);
-                GestorNotificacao.getInstance().order();
+                GestorNotificacao.getInstance().updateNotificacao(n);
+                //GestorNotificacao.getInstance().addNotificacao(n);
+                //GestorNotificacao.getInstance().order();
                 notifyDataSetChanged();
 
             }
@@ -118,5 +125,12 @@ public class NotificacaoAdapter extends BaseAdapter{
         v.setTag(this.noificacoes.get(position).getId());
 
         return v;
+    }
+
+
+
+    @Override
+    public void onChange(Object e) {
+        notifyDataSetChanged();
     }
 }

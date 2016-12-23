@@ -81,7 +81,7 @@ public class NotificacaoService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "onStartCommand", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Starting bustracker service", Toast.LENGTH_SHORT).show();
 
         posicoesParagens = new Stack<>();
 
@@ -163,9 +163,9 @@ public class NotificacaoService extends Service {
                     Thread.currentThread().interrupt();
                 }
                 if (pathSimulacao.size() > 0) {
-                    showToast("Finishing TutorialService, id: "+ pathSimulacao.size());
+                    showToast("Getting Data to simulate");
                 } else {
-                    showToast("Finishing TutorialService, id: " + msg.arg1 + getUrl(gestorInformacao.findCarreiraById(1).getTrajeto().get(0), gestorInformacao.findCarreiraById(1).getTrajeto().get(gestorInformacao.findCarreiraById(1).getTrajeto().size() - 1)));
+                    showToast("Data simulation 100%");
                 }
 
 
@@ -175,7 +175,7 @@ public class NotificacaoService extends Service {
             }
 
 
-            showToast("Simulação a iniciar "+GestorInformacao.getInstance().getViagens().size());
+            showToast("Starting simulation...");
 
             List<Viagem> viagens = GestorInformacao.getInstance().getViagens();
             List<Simulador> simuladors = new ArrayList();
@@ -186,7 +186,7 @@ public class NotificacaoService extends Service {
 
             }
 
-            showToast("Simulação a iniciada");
+            showToast("Simulation started");
 
             for (Simulador s : simuladors){
                 s.start();

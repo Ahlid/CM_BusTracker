@@ -1,15 +1,18 @@
 package com.example.pcts.bustracker.Fragments.Map;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pcts.bustracker.Activities.ParagemActivity;
 import com.example.pcts.bustracker.GoogleMapsUtilities.MyItem;
 import com.example.pcts.bustracker.GoogleMapsUtilities.OwnIconRendered;
 import com.example.pcts.bustracker.Managers.GestorInformacao;
@@ -33,6 +37,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.clustering.ClusterManager;
@@ -132,9 +137,9 @@ public class MainFragment extends Fragment implements ViagemObserver {
                 //.icon(BitmapDescriptorFactory.fromBitmap(b));
 
 
-                mMap.addMarker(actual);
+                mMap.addMarker(actual).showInfoWindow();;
 
-                addCircleToMap(posicao, mMap);
+                addCircleToMap(posicao, mMap, R.color.colorPrimary,2 );
 
 
             }
@@ -142,13 +147,54 @@ public class MainFragment extends Fragment implements ViagemObserver {
         }
 
 
+
+        //paragens
+
+        final List<Paragem> paragens = GestorInformacao.getInstance().getParagems();
+
+        for(Paragem p : paragens){
+            Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_bus_stop);
+            Bitmap b = castToBitMap(drawable);
+
+            //b = get_Resized_Bitmap(b, 250, 250);
+
+            final MarkerOptions actual = new MarkerOptions()
+                    .position(p.getPosicao())
+                    .title(p.getNome())
+                    .icon(BitmapDescriptorFactory.fromBitmap(b));
+
+
+
+           mMap.addMarker(actual);
+
+
+
+        }
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                for(Paragem paragem : paragens){
+                    if(paragem.getNome().equals(marker.getTitle())){
+                        Intent intent = new Intent(getContext(), ParagemActivity.class);
+                        intent.putExtra(ParagemActivity.KEY_PARAGEM_INTENT, paragem.getId());
+                        getContext().startActivity(intent);
+                        break;
+                    }
+                }
+
+                return true;
+            }
+        });
+
     }
 
 
-    private void addCircleToMap(LatLng pos, GoogleMap mapView) {
+    private void addCircleToMap(LatLng pos, GoogleMap mapView, int cor, int raio) {
 
         // circle settings
-        int radiusM = 2;
+        int radiusM = raio;
         double latitude = pos.latitude;
         double longitude = pos.longitude;
 
@@ -157,7 +203,8 @@ public class MainFragment extends Fragment implements ViagemObserver {
         Bitmap bm = Bitmap.createBitmap(d, d, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bm);
         Paint p = new Paint();
-        p.setColor(getResources().getColor(R.color.colorPrimary));
+
+        p.setColor(getResources().getColor(cor));
         c.drawCircle(d / 2, d / 2, d / 2, p);
 
         // generate BitmapDescriptor from circle Bitmap
@@ -201,5 +248,14 @@ public class MainFragment extends Fragment implements ViagemObserver {
 
             }
         });
+    }
+
+    public static Bitmap castToBitMap(Drawable vectorDrawable){
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
+                vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        vectorDrawable.draw(canvas);
+        return bitmap;
     }
 }
