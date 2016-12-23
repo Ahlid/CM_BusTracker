@@ -42,27 +42,6 @@ View rootView;
          rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
         ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle("Notificações");
 
-
-        Button button = (Button) rootView.findViewById(R.id.button7);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ParagemActivity.class);
-                intent.putExtra(ParagemActivity.KEY_PARAGEM_INTENT, 2);
-                startActivity(intent);
-            }
-        });
-
-        Button button2 = (Button) rootView.findViewById(R.id.button8);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CarreiraActivity.class);
-                intent.putExtra(CarreiraActivity.KEY_CARREIRA_INTENT, 1);
-                startActivity(intent);
-            }
-        });
-
         actualizarListaCarreiras();
         // Inflate the layout for this fragment
         return rootView;
